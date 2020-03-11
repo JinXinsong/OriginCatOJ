@@ -10,7 +10,7 @@ public class OJUser {
 
     private String userMail;
 
-    private String userPasswd;
+    private String userPassWd;
 
     private String userPhone;
 
@@ -21,4 +21,6 @@ public class OJUser {
     private int userKind;
 
     private String userName;
+
+    private int userStatus;
 }

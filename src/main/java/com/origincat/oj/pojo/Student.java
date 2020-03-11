@@ -6,9 +6,9 @@ import lombok.Data;
 public class Student{
     private String studentMail;
 
-    private String studentClass;
+    private int studentClassID;
 
     private String studentName;
 
-    private int studentID;
+    private String studentID;
 }
