@@ -31,8 +31,9 @@ public class StudentServletImpl implements StudentServlet {
         ojUser.setLastEditTime(createTime);
         ojUser.setUserKind(1);
         ojUser.setUserStatus(2);
+        ojUser.setUserName(student.getStudentName());
         ojUserDao.signUp(ojUser);
 
-        return StudentSignUpEnum.stateOf(0);
+        return StudentSignUpEnum.stateOf(2);
     }
 }

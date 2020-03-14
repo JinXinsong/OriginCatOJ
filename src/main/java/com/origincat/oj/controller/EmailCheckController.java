@@ -1,7 +1,7 @@
 package com.origincat.oj.controller;
 
 import com.origincat.oj.pojo.OJUser;
-import com.origincat.oj.servlet.impl.SignUpSelectOJUserServlet;
+import com.origincat.oj.servlet.impl.SelectOJUserServletImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,10 @@ import java.util.Map;
 @RestController
 public class EmailCheckController {
 
-    private SignUpSelectOJUserServlet signUpSelectOJUserServlet;
+    private SelectOJUserServletImpl signUpSelectOJUserServlet;
 
     @Autowired
-    public EmailCheckController(SignUpSelectOJUserServlet signUpSelectOJUserServlet) {
+    public EmailCheckController(SelectOJUserServletImpl signUpSelectOJUserServlet) {
         this.signUpSelectOJUserServlet = signUpSelectOJUserServlet;
     }
 

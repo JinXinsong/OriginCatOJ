@@ -6,7 +6,7 @@ $(function () {
     let checkInput5 = false;
     let checkInput6 = false;
 
-    $("#validationServer01").keyup(function () {
+    $("#validationServer01").change(function () {
         let page = "/signUp/emailCheck";
         let value = $(this).val();
         let dataValue = {
@@ -33,7 +33,7 @@ $(function () {
         });
     });
 
-    $("#validationServer02").keyup(function () {
+    $("#validationServer02").change(function () {
         let value = $(this).val();
         if (value.length < 6) {
             $(this).addClass("is-invalid").removeClass("is-valid");
@@ -46,7 +46,7 @@ $(function () {
         }
     });
 
-    $("#validationServer03").keyup(function () {
+    $("#validationServer03").change(function () {
         let passWd = $("#validationServer02").val();
         let rePassWd = $(this).val();
         if (passWd == rePassWd) {
@@ -60,7 +60,7 @@ $(function () {
         }
     });
 
-    $("#validationServer04").keyup(function () {
+    $("#validationServer04").change(function () {
         if(!$(this).val()){
             $(this).addClass("is-invalid").removeClass("is-valid");
             $("#checkValidationServer04").addClass("invalid-feedback").html("姓名不能为空").removeClass("valid-feedback");
@@ -110,26 +110,58 @@ $(function () {
         });
     });
 
-    $("#submit").click(function () {
+    $("#signUp").click(function () {
         if(checkInput1 && checkInput2 && checkInput3 && checkInput4 && checkInput5 && checkInput6){
+            console.log("with");
             let dataValue = {
-                "userMail" : $("validationServer01").val(),
-                "userPassWd" : $("validationServer02").val(),
-                "studentName" : $("validationServer04").val(),
-                "studentClassID" : $("validationServer05").val(),
-                "studentID" : $("validationServer06").val(),
+                "userMail" : $("#validationServer01").val(),
+                "userPassWd" : $("#validationServer02").val(),
+                "studentName" : $("#validationServer04").val(),
+                "studentClassID" : $("#validationServer05").val(),
+                "studentID" : $("#validationServer06").val(),
             };
+            console.log(dataValue);
             $.ajax({
                 type: "POST",
-                url: "/signUp/sign",
+                url: "/signUp/submit",
                 data: JSON.stringify(dataValue),
                 contentType: "application/json",
                 dataType: "json",
                 success: function (result) {
                     result = JSON.parse(JSON.stringify(result));
+                    if(result.success){
+                        window.location.href="/index/check";
+                    }else{
+                        alert(result.msg);
+                    }
                 }
             })
         }
+    });
+
+    $("#validationServer07").change(function () {
+        let page = "/signUp/emailCheck";
+        let value = $(this).val();
+        let dataValue = {
+            "userMail": value
+        };
+        $.ajax({
+            type: "POST",
+            url: page,
+            data: JSON.stringify(dataValue),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
+                result = JSON.parse(JSON.stringify(result));
+                if (!result.success) {
+                    $("#validationServer07").addClass("is-valid").removeClass("is-invalid");
+                    $("#checkValidationServer07").addClass("valid-feedback").removeClass("invalid-feedback").html(result.msg);
+                } else {
+                    $("#validationServer07").addClass("is-invalid").removeClass("is-valid");
+                    $("#checkValidationServer07").addClass("invalid-feedback").removeClass("valid-feedback").html(result.msg);
+                }
+            }
+        });
     });
 
 });

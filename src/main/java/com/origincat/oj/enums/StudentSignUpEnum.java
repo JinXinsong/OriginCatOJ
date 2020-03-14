@@ -4,7 +4,8 @@ import lombok.Getter;
 
 public enum StudentSignUpEnum {
     SUCCESS(0, "添加成功"),
-    ERROR(1,"添加失败");
+    ERROR(1,"添加失败"),
+    CHECK(2,"审核中");
 
     @Getter
     private int state;

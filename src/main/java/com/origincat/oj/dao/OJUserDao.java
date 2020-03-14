@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface OJUserDao {
 
-    @Insert("insert into OJUser (userMail, userPassWd, userPhone, createTime, lastEditTime, userKind, userName, userStatus) values (#{userMail}, #{userPassWd}, #{userPhone}, #{createTime}, #{lastEditTime}, #{userKind}, #{userName}, #{userStatus)")
+    @Insert("insert into OJUser (userMail, userPassWd, userPhone, createTime, lastEditTime, userKind, userName, userStatus) values (#{userMail}, #{userPassWd}, #{userPhone}, #{createTime}, #{lastEditTime}, #{userKind}, #{userName}, #{userStatus})")
     public int signUp(OJUser ojUser);
 
     @Select("select * from OJUser where userMail = #{userMail}")

@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SignUpSelectOJUserServlet implements SelectOJUserServlet {
+public class SelectOJUserServletImpl implements SelectOJUserServlet {
 
     private OJUserDao ojUserDao;
     private StudentDao studentDao;
 
     @Autowired
-    public SignUpSelectOJUserServlet(OJUserDao ojUserDao, StudentDao studentDao) {
+    public SelectOJUserServletImpl(OJUserDao ojUserDao, StudentDao studentDao) {
 
         this.ojUserDao = ojUserDao;
         this.studentDao = studentDao;

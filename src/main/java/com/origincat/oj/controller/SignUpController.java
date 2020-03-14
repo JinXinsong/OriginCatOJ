@@ -2,7 +2,6 @@ package com.origincat.oj.controller;
 
 import com.origincat.oj.pojo.StudentClass;
 import com.origincat.oj.servlet.StudentClassServlet;
-import com.origincat.oj.servlet.impl.StudentClassServletImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +20,10 @@ public class SignUpController {
     }
 
 
-    @RequestMapping(value = "/signUp")
+    @RequestMapping(value = {"/", "index"})
     public String signUp(Model model){
         List<StudentClass> studentClassList = studentClassServlet.selectAllStudentClass();
         model.addAttribute("studentClassList", studentClassList);
-        return "SignUp";
+        return "index";
     }
 }

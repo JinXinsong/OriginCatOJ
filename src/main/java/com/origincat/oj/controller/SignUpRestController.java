@@ -1,24 +1,30 @@
 package com.origincat.oj.controller;
 
+import com.origincat.oj.enums.StudentSignUpEnum;
 import com.origincat.oj.pojo.OJUser;
 import com.origincat.oj.pojo.Student;
-import org.apache.ibatis.annotations.Insert;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.origincat.oj.servlet.StudentServlet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.lang.Integer.*;
 
 @RestController
 public class SignUpRestController {
 
+    private StudentServlet studentServlet;
+
+    @Autowired
+    public SignUpRestController(StudentServlet studentServlet){
+        this.studentServlet = studentServlet;
+    }
+
     @ResponseBody
-    @RequestMapping(value = "/signUp/sign")
-    public Map<String, Object> signUp(@RequestBody Map<String, Object> request){
+    @RequestMapping(value = "/signUp/submit", method = RequestMethod.POST)
+    public Map<String, Object> signUp(@RequestBody Map<String, Object> request, HttpServletResponse response){
         Map<String, Object> modelMap = new HashMap<>();
         String userMail = request.get("userMail").toString();
         String userPassWd = request.get("userPassWd").toString();
@@ -37,7 +43,15 @@ public class SignUpRestController {
         student.setStudentName(studentName);
         student.setStudentID(studentID);
 
-
+        if(studentServlet.insertStudent(student, ojUser) == StudentSignUpEnum.CHECK){
+            Cookie cookie = new Cookie("userMail", ojUser.getUserMail());
+            response.addCookie(cookie);
+            modelMap.put("success", true);
+            modelMap.put("msg", "注册成功");
+        }else{
+            modelMap.put("success", false);
+            modelMap.put("msg", "注册失败 请检测注册信息或联系管理员");
+        }
 
         return modelMap;
     }
