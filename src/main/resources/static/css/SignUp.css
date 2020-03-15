@@ -1,6 +1,7 @@
 body {
     background-image: url(../img/backgroundimg.png);
 
+    height: 100%;
     margin: 0;
     padding: 0;
     font-family: sans-serif;
@@ -12,6 +13,21 @@ body {
     -webkit-background-size: cover;
     -o-background-size: cover;
     -moz-background-size: cover;
-    -ms-background-size: cover;
 
+}
+
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-inside: auto;
+    margin-bottom: auto;
+}
+
+.outer {
+    height: 100%;
+    padding: 150px 0 0;
+    box-sizing: border-box;
+    position: relative;
 }

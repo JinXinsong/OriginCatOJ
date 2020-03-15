@@ -2,6 +2,7 @@ package com.origincat.oj.servlet.impl;
 
 import com.origincat.oj.dao.OJUserDao;
 import com.origincat.oj.dao.StudentDao;
+import com.origincat.oj.enums.OJUserSignInEnum;
 import com.origincat.oj.pojo.OJUser;
 import com.origincat.oj.pojo.Student;
 import com.origincat.oj.servlet.SelectOJUserServlet;
@@ -39,5 +40,23 @@ public class SelectOJUserServletImpl implements SelectOJUserServlet {
     @Override
     public boolean checkStudentID(Student student) {
         return studentDao.selectStudentByStudentID(student.getStudentID()) != null;
+    }
+
+    @Override
+    public OJUserSignInEnum checkOJUserSignIn(OJUser ojUser) {
+        OJUser ojUser1 = ojUserDao.selectOJUser(ojUser.getUserMail());
+        if(!ojUser.getUserPassWd().equals(ojUser1.getUserPassWd())){
+            return OJUserSignInEnum.ERROR;
+        }else{
+            if(ojUser1.getUserStatus() == 2){
+                return OJUserSignInEnum.CHECK;
+            }else {
+                if(ojUser1.getUserKind() == 1){
+                    return OJUserSignInEnum.STUDENT;
+                }else{
+                    return OJUserSignInEnum.ADMIN;
+                }
+            }
+        }
     }
 }

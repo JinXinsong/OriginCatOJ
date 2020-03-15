@@ -139,6 +139,7 @@ $(function () {
         }
     });
 
+    let checkInput7 = false;
     $("#validationServer07").change(function () {
         let page = "/signUp/emailCheck";
         let value = $(this).val();
@@ -156,12 +157,52 @@ $(function () {
                 if (!result.success) {
                     $("#validationServer07").addClass("is-valid").removeClass("is-invalid");
                     $("#checkValidationServer07").addClass("valid-feedback").removeClass("invalid-feedback").html(result.msg);
+                    checkInput7 = true;
                 } else {
                     $("#validationServer07").addClass("is-invalid").removeClass("is-valid");
                     $("#checkValidationServer07").addClass("invalid-feedback").removeClass("valid-feedback").html(result.msg);
+                    checkInput7 = false;
                 }
             }
         });
     });
 
+    $("#signIn").click(function () {
+        if(checkInput7){
+            let dataValue = {
+                "userMail" : $("#validationServer07").val(),
+                "userPassWd" : $("#validationServer08").val(),
+            };
+            $.ajax({
+                type: "POST",
+                url: "/signIn/submit",
+                data: JSON.stringify(dataValue),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (result) {
+                    result = JSON.parse(JSON.stringify(result));
+                    if(result.success){
+                        switch (result.result) {
+                            case "check": {window.location.href = "/index/check"; break;}
+                            case "student": {window.location.href = "/student/index"; break;}
+                            case "admin": {window.location.href = "/admin/index"; break;}
+                            default: alert(result.result);
+                        }
+                    }else{
+                        alert(result.result);
+                    }
+                }
+            })
+        }
+    });
+
+    $("#goSignIn").click(function () {
+        $("#signUpModel").addClass("d-none");
+        $("#signInModel").removeClass("d-none");
+    });
+
+    $("#goSignUp").click(function () {
+        $("#signInModel").addClass("d-none");
+        $("#signUpModel").removeClass("d-none");
+    });
 });

@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>SignUp</title>
+    <title>OriginCat.OJ</title>
     <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/SignUp.css}">
 </head>
 
 <body>
-<div class="p-2 bd-highlight justify-content-center d-flex" id="signUpMod">
+<div class="p-2 bd-highlight justify-content-center d-flex">
     <div class="align-self-stretch flex-fill"></div>
     <div class="d-flex flex-column bd-highlight align-self-center flex-fill">
         <div class="p-2 bd-highlight"></div>
@@ -16,7 +16,7 @@
         <div class="p-2 bd-highlight"></div>
         <div class="d-flex p-2 bd-highlight">
             <div class="align-self-stretch col-md-3"></div>
-            <div class="p-2 bd-highlight flex-fill shadow-sm rounded-lg">
+            <div class="p-2 bd-highlight flex-fill shadow-sm rounded-lg" id="signInModel">
                 <form>
                     <div class="col-md-12 mb-3">
                         <label for="validationServer01">邮箱</label>
@@ -38,7 +38,7 @@
                     </div>
                 </form>
             </div>
-            <div class="p-2 bd-highlight flex-fill shadow-sm rounded-lg d-none">
+            <div class="p-2 bd-highlight flex-fill shadow-sm rounded-lg d-none" id="signUpModel">
                 <form>
                     <div class="col-md-12 mb-3">
                         <label for="validationServer01">邮箱</label>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="btn btn-success btn-block" id="signUp">注册</div>
-                        <div class="btn btn-primary btn-block" id="goSignIn">返回首页</div>
+                        <div class="btn btn-primary btn-block" id="goSignIn">返回登陆</div>
                     </div>
                 </form>
             </div>
@@ -101,6 +101,6 @@
 <script type="text/javascript" th:src="@{js/jquery-3.4.1.js}"></script>
 <script type="text/javascript" th:src="@{js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{js/SignUp.js}"></script>
+<script type="text/javascript" th:src="@{js/index.js}"></script>
 </body>
 </html>

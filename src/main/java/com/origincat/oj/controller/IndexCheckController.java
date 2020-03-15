@@ -11,12 +11,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class IndexCheck {
+public class IndexCheckController {
 
     private SelectOJUserServlet selectOJUserServlet;
 
     @Autowired
-    public IndexCheck(SelectOJUserServlet selectOJUserServlet){
+    public IndexCheckController(SelectOJUserServlet selectOJUserServlet){
         this.selectOJUserServlet = selectOJUserServlet;
     }
 

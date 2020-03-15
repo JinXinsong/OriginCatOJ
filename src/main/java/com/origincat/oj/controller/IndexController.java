@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-public class SignUpController {
+public class IndexController {
 
     StudentClassServlet studentClassServlet;
 
     @Autowired
-    public SignUpController(StudentClassServlet studentClassServlet){
+    public IndexController(StudentClassServlet studentClassServlet){
         this.studentClassServlet = studentClassServlet;
     }
 
@@ -24,6 +24,16 @@ public class SignUpController {
     public String signUp(Model model){
         List<StudentClass> studentClassList = studentClassServlet.selectAllStudentClass();
         model.addAttribute("studentClassList", studentClassList);
-        return "index";
+        return "index/index";
+    }
+
+    @RequestMapping(value = "/student/index")
+    public String studentIndex(){
+        return "student/index";
+    }
+
+    @RequestMapping(value = "/admin/index")
+    public String adminIndex(){
+        return "admin/index";
     }
 }

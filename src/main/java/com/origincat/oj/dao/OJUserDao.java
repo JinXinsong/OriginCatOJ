@@ -15,4 +15,5 @@ public interface OJUserDao {
 
     @Select("select * from OJUser where userMail = #{userMail}")
     public OJUser selectOJUser(String userMail);
+
 }
