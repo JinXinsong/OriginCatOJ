@@ -4,13 +4,34 @@
     <meta charset="UTF-8">
     <title>admin</title>
 
-    <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
 </head>
 <body>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="#">question</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">contest</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">查看比赛</a>
+            <a class="dropdown-item" href="#">组建比赛</a>
+            <a class="dropdown-item" href="#"></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+    </li>
+</ul>
 
 
-<script type="text/javascript" th:src="@{js/jquery-3.4.1.js}"></script>
-<script type="text/javascript" th:src="@{js/popper.min.js}"></script>
-<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{../js/jquery-3.4.1.js}"></script>
+<script type="text/javascript" th:src="@{../js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
 </body>
 </html>
