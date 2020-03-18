@@ -8,24 +8,33 @@
 </head>
 <body>
 <ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" href="#">question</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">所有题目</a>
+            <a class="dropdown-item" href="/admin/createQuestion">新建题目</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">未发布</a>
+            <a class="dropdown-item" href="#">已发布</a>
+            <a class="dropdown-item" href="#">已删除</a>
+        </div>
     </li>
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">contest</a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">比赛</a>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="#">查看比赛</a>
             <a class="dropdown-item" href="#">组建比赛</a>
-            <a class="dropdown-item" href="#"></a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
+            <a class="dropdown-item" href="#">未开始</a>
+            <a class="dropdown-item" href="#">已开始</a>
+            <a class="dropdown-item" href="#">已结束</a>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">用户</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <a class="nav-link" href="#">关于</a>
     </li>
 </ul>
 

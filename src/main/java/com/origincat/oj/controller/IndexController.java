@@ -31,9 +31,4 @@ public class IndexController {
     public String studentIndex(){
         return "student/index";
     }
-
-    @RequestMapping(value = "/admin/index")
-    public String adminIndex(){
-        return "admin/index";
-    }
 }
