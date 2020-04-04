@@ -2,7 +2,10 @@ package com.origincat.oj.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.origincat.oj.dao.OJUserDao;
+import com.origincat.oj.pojo.OJUser;
 import com.origincat.oj.pojo.Question;
+import com.origincat.oj.servlet.OJUserServlet;
 import com.origincat.oj.servlet.QuestionServlet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +20,12 @@ import java.util.List;
 public class AdminController {
 
     private QuestionServlet questionServlet;
+    private OJUserServlet ojUserServlet;
 
-    public AdminController(QuestionServlet questionServlet){
+    public AdminController(QuestionServlet questionServlet, OJUserServlet ojUserServlet){
+
         this.questionServlet = questionServlet;
+        this.ojUserServlet = ojUserServlet;
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -27,7 +33,7 @@ public class AdminController {
 
         PageHelper.startPage(start,size,"questionID desc");
         List<Question> questionList = questionServlet.selectAllQuestion();
-        PageInfo<Question> page = new PageInfo<>(questionList);
+        PageInfo<Question> page = new PageInfo(questionList);
         model.addAttribute("page", page);
 
         return "admin/index";
@@ -52,5 +58,16 @@ public class AdminController {
         model.addAttribute("question", question);
 
         return "admin/viewQuestion";
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String user(Model model, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size){
+
+        PageHelper.startPage(start,size,"userID desc");
+        List<OJUser> ojUserList = ojUserServlet.selectAllOJUser();
+        PageInfo<Question> page = new PageInfo(ojUserList);
+        model.addAttribute("page", page);
+
+        return "admin/user";
     }
 }

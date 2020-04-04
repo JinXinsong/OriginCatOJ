@@ -8,10 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class OJUserServletImpl implements OJUserServlet {
-    @Autowired
+
     private OJUserDao ojUserDao;
+
+    @Autowired
+    OJUserServletImpl(OJUserDao ojUserDao){
+        this.ojUserDao = ojUserDao;
+    }
 
     @Transactional
     @Override
@@ -28,5 +35,10 @@ public class OJUserServletImpl implements OJUserServlet {
             throw new RuntimeException("loginError:" + e.getMessage());
         }
         return OJUserSignUpEnum.CHECK;
+    }
+
+    @Override
+    public List<OJUser> selectAllOJUser() {
+        return ojUserDao.selectAllOJUser();
     }
 }

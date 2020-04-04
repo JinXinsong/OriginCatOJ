@@ -6,48 +6,61 @@
     <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
 </head>
 <body>
-<ul class="nav nav-tabs">
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="/admin/index">所有题目</a>
-            <a class="dropdown-item" href="/admin/createQuestion">新建题目</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">未发布</a>
-            <a class="dropdown-item" href="#">已发布</a>
-            <a class="dropdown-item" href="#">已删除</a>
-        </div>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">比赛</a>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">查看比赛</a>
-            <a class="dropdown-item" href="#">组建比赛</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">未开始</a>
-            <a class="dropdown-item" href="#">已开始</a>
-            <a class="dropdown-item" href="#">已结束</a>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">用户</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">关于</a>
-    </li>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">OCOJ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/admin/index">所有题目</a>
+                    <a class="dropdown-item" href="/admin/createQuestion">新建题目</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">未发布</a>
+                    <a class="dropdown-item" href="#">已发布</a>
+                    <a class="dropdown-item" href="#">已删除</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">比赛</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">查看比赛</a>
+                    <a class="dropdown-item" href="#">组建比赛</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">未开始</a>
+                    <a class="dropdown-item" href="#">已开始</a>
+                    <a class="dropdown-item" href="#">已结束</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/submit">提交</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/user">用户</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">关于</a>
+            </li>
+        </ul>
+    </div>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
 
 <div style="height: 32px"></div>
 
 <div class="row">
-    <div class="col-2">
-        <ul class="list-group">
-            <li class="list-group-item"><a href="/admin/index">所有题目</a></li>
-            <li class="list-group-item"><a href="/admin/createQuestion">新建题目</a></li>
-            <li class="list-group-item"><a href="#">未发布</a></li>
-            <li class="list-group-item"><a href="#">已发布</a></li>
-            <li class="list-group-item"><a href="#">已删除</a></li>
-        </ul>
+    <div class="col-2 list-group">
+        <a href="/admin/index" class="list-group-item list-group-item-action">所有题目</a>
+        <a href="/admin/createQuestion" class="list-group-item list-group-item-action">新建题目</a>
+        <a href="#" class="list-group-item list-group-item-action">未发布</a>
+        <a href="#" class="list-group-item list-group-item-action">已发布</a>
+        <a href="#" class="list-group-item list-group-item-action">已删除</a>
     </div>
     <div class="col">
         <div class="d-flex justify-content-center">
