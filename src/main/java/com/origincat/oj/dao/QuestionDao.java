@@ -4,6 +4,7 @@ import com.origincat.oj.pojo.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,9 +14,14 @@ import java.util.List;
 public interface QuestionDao {
 
     @Insert("insert into Question (questionID, questionTitle, questionInput, questionAccept, questionStatus, questionTimeLimit, questionMemoryLimit, questionContent, questionInputSimple, questionOutputSimple, questionPrompt) values (#{questionID}, #{questionTitle}, #{questionInput}, #{questionAccept}, #{questionStatus}, #{questionTimeLimit}, #{questionMemoryLimit}, #{questionContent}, #{questionInputSimple}, #{questionOutputSimple}, #{questionPrompt})")
-    public int createQuestion(Question question);
+    int createQuestion(Question question);
 
     @Select("select * from Question")
-    public List<Question> selectAllQuestion();
+    List<Question> selectAllQuestion();
 
+    @Select("select * from Question where questionID = #{questionID}")
+    Question selectQuestionByID(String questionID);
+
+    @Update("update Question set questionTitle = #{questionTitle}, questionStatus = #{questionStatus}, questionTimeLimit = #{questionTimeLimit}, questionMemoryLimit = #{questionMemoryLimit}, questionContent = #{questionContent}, questionInputSimple = #{questionInputSimple}, questionOutputSimple = #{questionOutputSimple}, questionPrompt = #{questionPrompt} where questionID = #{questionID}")
+    int editQuestion(Question question);
 }

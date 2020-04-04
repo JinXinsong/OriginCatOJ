@@ -54,6 +54,10 @@
             <div class="col-10">
                 <form>
                     <div class="form-group">
+                        <label for="exampleFormControlTextarea0">题目编号</label>
+                        <input class="form-control" id="exampleFormControlTextarea5" th:value="${question.questionID}" readonly>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleFormControlSelect1">选择发布状态</label>
                         <select class="form-control" id="exampleFormControlSelect1">
                             <option value="1">发布</option>
@@ -62,46 +66,34 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea0">标题</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea0" rows="1"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea0" rows="1" th:text="${question.questionTitle}"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">题目</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" th:text="${question.questionContent}"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea2">输入样例</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" th:text="${question.questionInputSimple}"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea3">输出样例</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea3" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" th:text="${question.questionOutputSimple}"></textarea>
                     </div>
                     <div class="row form-group">
                         <div class="col">
                             <label for="timeLimit">时间限制</label>
-                            <textarea class="form-control" id="timeLimit" rows="1" placeholder="单位：MS"></textarea>
+                            <textarea class="form-control" id="timeLimit" rows="1" placeholder="单位：MS" th:text="${question.questionTimeLimit}"></textarea>
                         </div>
                         <div class="col">
                             <label for="MemoryLimit">内存限制</label>
-                            <textarea class="form-control" id="MemoryLimit" rows="1" placeholder="单位：K"></textarea>
+                            <textarea class="form-control" id="MemoryLimit" rows="1" placeholder="单位：K" th:text="${question.questionMemoryLimit}"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea4">其他信息</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea4" rows="1">NULL</textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea4" rows="1" th:text="${question.questionPrompt}">NULL</textarea>
                     </div>
-                    <div class="row form-group">
-                        <div class="col">
-                            <textarea class="form-control" id="input0" rows="3" placeholder="测试用例输入"></textarea>
-                        </div>
-                        <div class="col">
-                            <textarea class="form-control" id="output0" rows="3" placeholder="测试用例输入"></textarea>
-                        </div>
-                        <div class="col-2">
-                            <div type="button" class="btn btn-danger deleteTest">删除</div>
-                        </div>
-                    </div>
-                    <div type="button" class="btn btn-primary col btn-block form-group" id="addTest">添加测试用例</div>
                     <div class="row form-group">
                         <div class="col">
                             <div type="button" class="btn btn-danger col" id="goBack">返回</div>
@@ -116,11 +108,9 @@
     </div>
 </div>
 
-
-
 <script type="text/javascript" th:src="@{../js/jquery-3.4.1.js}"></script>
 <script type="text/javascript" th:src="@{../js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{../js/createQuestion.js}"></script>
+<script type="text/javascript" th:src="@{../js/editQuestion.js}"></script>
 </body>
 </html>

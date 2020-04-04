@@ -29,7 +29,7 @@ public class EmailCheckController {
 
         if (signUpSelectOJUserServlet.checkOJUser(ojUser)) {
             modelMap.put("success", false);
-            modelMap.put("msg", "邮箱已被注册");
+            modelMap.put("msg", "邮箱已注册");
         } else {
             modelMap.put("success", true);
             modelMap.put("msg", "未被注册");

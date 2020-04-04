@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -48,5 +49,20 @@ public class QuestionServletImpl implements QuestionServlet {
         }
 
         return questionDao.createQuestion(question) > 0;
+    }
+
+    @Override
+    public List<Question> selectAllQuestion() {
+        return questionDao.selectAllQuestion();
+    }
+
+    @Override
+    public Question selectQuestionByID(String questionID) {
+        return questionDao.selectQuestionByID(questionID);
+    }
+
+    @Override
+    public boolean editQuestion(Question question) {
+        return questionDao.editQuestion(question) > 0;
     }
 }

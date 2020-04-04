@@ -20,7 +20,7 @@ public class IndexController {
     }
 
 
-    @RequestMapping(value = {"/", "index"})
+    @RequestMapping(value = {"/", "/index"})
     public String signUp(Model model){
         List<StudentClass> studentClassList = studentClassServlet.selectAllStudentClass();
         model.addAttribute("studentClassList", studentClassList);

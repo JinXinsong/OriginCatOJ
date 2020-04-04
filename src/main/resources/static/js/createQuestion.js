@@ -62,4 +62,8 @@ $(function () {
             }
         })
     });
+
+    $("#goBack").click(function () {
+        window.location.href = "/admin/index";
+    })
 });
