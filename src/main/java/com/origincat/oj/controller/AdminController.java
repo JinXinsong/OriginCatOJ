@@ -29,12 +29,18 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String adminIndex(Model model, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size){
+    public String adminIndex(Model model, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size, @RequestParam(value = "status", defaultValue = "0") int status){
 
         PageHelper.startPage(start,size,"questionID desc");
-        List<Question> questionList = questionServlet.selectAllQuestion();
+        List<Question> questionList = null;
+        if(status == 0){
+            questionList = questionServlet.selectAllQuestion();
+        }else {
+            questionList = questionServlet.selectQuestionByStatus(status);
+        }
         PageInfo<Question> page = new PageInfo(questionList);
         model.addAttribute("page", page);
+        model.addAttribute("status", status);
 
         return "admin/index";
     }
@@ -69,5 +75,15 @@ public class AdminController {
         model.addAttribute("page", page);
 
         return "admin/user";
+    }
+
+    @RequestMapping(value = "/submit", method = RequestMethod.GET)
+    public String submit(Model model){
+        return "admin/submit";
+    }
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String about(Model model){
+        return "admin/about";
     }
 }

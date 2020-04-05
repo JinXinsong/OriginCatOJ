@@ -19,9 +19,9 @@
                     <a class="dropdown-item" href="/admin/index">所有题目</a>
                     <a class="dropdown-item" href="/admin/createQuestion">新建题目</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">未发布</a>
-                    <a class="dropdown-item" href="#">已发布</a>
-                    <a class="dropdown-item" href="#">已删除</a>
+                    <a class="dropdown-item" th:href="@{/admin/index(status=2)}">未发布</a>
+                    <a class="dropdown-item" th:href="@{/admin/index(status=1)}">已发布</a>
+                    <a class="dropdown-item" th:href="@{/admin/index(status=3)}">已删除</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -42,7 +42,7 @@
                 <a class="nav-link" href="/admin/user">用户</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">关于</a>
+                <a class="nav-link" href="/admin/about">关于</a>
             </li>
         </ul>
     </div>
@@ -58,8 +58,8 @@
     <div class="col-2 list-group">
         <a href="/admin/index" class="list-group-item list-group-item-action">所有题目</a>
         <a href="/admin/createQuestion" class="list-group-item list-group-item-action">新建题目</a>
-        <a href="#" class="list-group-item list-group-item-action">未发布</a>
-        <a href="#" class="list-group-item list-group-item-action">已发布</a>
+        <a th:href="@{/admin/index(status=2)}" class="list-group-item list-group-item-action">未发布</a>
+        <a th:href="@{/admin/index(status=1)}" class="list-group-item list-group-item-action">已发布</a>
         <a href="#" class="list-group-item list-group-item-action">已删除</a>
     </div>
     <div class="col">

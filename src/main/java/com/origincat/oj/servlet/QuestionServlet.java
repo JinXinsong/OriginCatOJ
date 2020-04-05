@@ -12,6 +12,8 @@ public interface QuestionServlet {
 
     List<Question> selectAllQuestion();
 
+    List<Question> selectQuestionByStatus(int questionStatus);
+
     Question selectQuestionByID(String questionID);
 
     boolean editQuestion(Question question);

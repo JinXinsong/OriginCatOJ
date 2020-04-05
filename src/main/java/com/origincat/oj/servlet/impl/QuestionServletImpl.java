@@ -57,6 +57,11 @@ public class QuestionServletImpl implements QuestionServlet {
     }
 
     @Override
+    public List<Question> selectQuestionByStatus(int questionStatus) {
+        return questionDao.selectQuestionByStatus(questionStatus);
+    }
+
+    @Override
     public Question selectQuestionByID(String questionID) {
         return questionDao.selectQuestionByID(questionID);
     }

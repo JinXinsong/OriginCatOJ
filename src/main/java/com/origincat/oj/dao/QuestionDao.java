@@ -19,6 +19,9 @@ public interface QuestionDao {
     @Select("select * from Question where questionStatus != 3")
     List<Question> selectAllQuestion();
 
+    @Select("select * from Question where questionStatus = #{questionStatus}")
+    List<Question> selectQuestionByStatus(int questionStatus);
+
     @Select("select * from Question where questionID = #{questionID}")
     Question selectQuestionByID(String questionID);
 
