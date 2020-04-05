@@ -15,4 +15,6 @@ public interface QuestionServlet {
     Question selectQuestionByID(String questionID);
 
     boolean editQuestion(Question question);
+
+    boolean deleteQuestion(String questionID);
 }

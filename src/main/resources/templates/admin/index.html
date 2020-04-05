@@ -68,20 +68,22 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" style="width: 15%;">编号</th>
-                <th scope="col" style="width: 55%">题目</th>
+                <th scope="col" style="width: 45%">题目</th>
+                <th scope="col" style="width: 10%">通过率</th>
                 <th scope="col" style="width: 10%;">状态</th>
                 <th scope="col">选项</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="c:${page.list}">
-                <td th:text="${c.questionID}"></td>
+            <tr th:each="c:${page.list}" style="justify-content: center">
+                <td th:text="${c.questionNum}" style="text-align: center"></td>
                 <td th:text="${c.questionTitle}">Mark</td>
+                <td th:text="${c.questionAccept} + '/' + ${c.questionInput}"></td>
                 <td th:text="${c.questionStatus} == 1 ? '已发布' : '未发布'"></td>
                 <td>
                     <a class="btn btn-light" th:href="@{/admin/viewQuestion(questionID=${c.questionID})}">查看</a>
                     <a class="btn btn-secondary" th:href="@{/admin/editQuestion(questionID=${c.questionID})}">修改</a>
-                    <a class="btn btn-dark" th:href="@{/admin/deletQuestion(questionID=${c.questionID})}">删除</a>
+                    <button class="btn btn-dark deleteButton" th:value="${c.questionID}">删除</button>
                 </td>
             </tr>
             </tbody>
@@ -103,5 +105,24 @@
 <script type="text/javascript" th:src="@{../js/jquery-3.4.1.js}"></script>
 <script type="text/javascript" th:src="@{../js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
+<script>
+    $(function () {
+        $(".deleteButton").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/admin/deleteQuestion",
+                data: "questionID=" + $(this).val(),
+                success: function (result) {
+                    if (result.success) {
+                        alert("删除成功");
+                        location.reload();
+                    } else {
+                        alert("删除失败");
+                    }
+                }
+            });
+        });
+    })
+</script>
 </body>
 </html>

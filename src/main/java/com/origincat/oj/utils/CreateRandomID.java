@@ -7,11 +7,11 @@ import java.util.Random;
 
 public class CreateRandomID {
     public static String getRandomID(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssS");
         Date date= new Date();
         String string = simpleDateFormat.format(date);
         Random random = new Random();
         int randomNum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;
-        return randomNum + string;
+        return string + randomNum;
     }
 }

@@ -65,4 +65,9 @@ public class QuestionServletImpl implements QuestionServlet {
     public boolean editQuestion(Question question) {
         return questionDao.editQuestion(question) > 0;
     }
+
+    @Override
+    public boolean deleteQuestion(String questionID) {
+        return questionDao.deleteQuestion(questionID) > 0;
+    }
 }

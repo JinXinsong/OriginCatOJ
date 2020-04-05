@@ -95,4 +95,19 @@ public class AdminRestController {
 
         return ModelMap;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteQuestion", method = RequestMethod.POST)
+    public Map<String, Object> deleteQuestion(@RequestParam(value = "questionID") String questionID){
+        Map<String, Object> ModelMap = new HashMap<>();
+
+        if(questionServlet.deleteQuestion(questionID)){
+            ModelMap.put("success", true);
+        }else {
+            ModelMap.put("success", false);
+        }
+
+        return ModelMap;
+    }
+
 }
