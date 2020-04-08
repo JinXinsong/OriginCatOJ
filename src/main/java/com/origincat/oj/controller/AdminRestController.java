@@ -1,6 +1,7 @@
 package com.origincat.oj.controller;
 
 import com.origincat.oj.pojo.Question;
+import com.origincat.oj.servlet.OJUserServlet;
 import com.origincat.oj.servlet.QuestionServlet;
 import com.origincat.oj.utils.CreateRandomID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,12 @@ import java.util.Map;
 public class AdminRestController {
 
     private QuestionServlet questionServlet;
+    private OJUserServlet ojUserServlet;
 
     @Autowired
-    public AdminRestController(QuestionServlet questionServlet){
+    public AdminRestController(QuestionServlet questionServlet, OJUserServlet ojUserServlet){
         this.questionServlet = questionServlet;
+        this.ojUserServlet = ojUserServlet;
     }
 
     @ResponseBody
@@ -102,6 +105,20 @@ public class AdminRestController {
         Map<String, Object> ModelMap = new HashMap<>();
 
         if(questionServlet.deleteQuestion(questionID)){
+            ModelMap.put("success", true);
+        }else {
+            ModelMap.put("success", false);
+        }
+
+        return ModelMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/auditUser", method = RequestMethod.POST)
+    public Map<String, Object> auditUser(@RequestParam(value = "userMail") String userMail, @RequestParam(value = "status") int status){
+        Map<String, Object> ModelMap = new HashMap<>();
+
+        if(ojUserServlet.updateOJUserStatus(status, userMail)){
             ModelMap.put("success", true);
         }else {
             ModelMap.put("success", false);

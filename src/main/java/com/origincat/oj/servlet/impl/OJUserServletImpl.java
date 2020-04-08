@@ -41,4 +41,9 @@ public class OJUserServletImpl implements OJUserServlet {
     public List<OJUser> selectAllOJUser() {
         return ojUserDao.selectAllOJUser();
     }
+
+    @Override
+    public boolean updateOJUserStatus(int status, String userMail) {
+        return ojUserDao.updateOJUserStatus(status, userMail)>0;
+    }
 }

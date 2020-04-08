@@ -22,4 +22,9 @@ public class StudentClassServletImpl implements StudentClassServlet {
     public List<StudentClass> selectAllStudentClass() {
         return studentClassDao.selectAllStudentClass();
     }
+
+    @Override
+    public StudentClass selectStudentClassByID(int classID) {
+        return studentClassDao.selectStudentClassByID(classID);
+    }
 }

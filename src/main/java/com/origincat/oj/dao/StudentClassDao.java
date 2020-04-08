@@ -12,5 +12,8 @@ import java.util.List;
 public interface StudentClassDao {
 
     @Select("Select * from StudentClass")
-    public List<StudentClass> selectAllStudentClass();
+    List<StudentClass> selectAllStudentClass();
+
+    @Select("select * from StudentClass where classID = #{classID}")
+    StudentClass selectStudentClassByID(int classID);
 }

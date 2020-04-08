@@ -36,4 +36,9 @@ public class StudentServletImpl implements StudentServlet {
 
         return StudentSignUpEnum.stateOf(2);
     }
+
+    @Override
+    public Student selectStudentByMail(String userMail) {
+        return studentDao.selectStudentByStudentMail(userMail);
+    }
 }

@@ -71,7 +71,8 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">昵称</th>
-                <th scope="col" style="width: 60%">邮箱</th>
+                <th scope="col" style="width: 55%">邮箱</th>
+                <th scope="col" style="width: 10%">状态</th>
                 <th scope="col">选项</th>
             </tr>
             </thead>
@@ -79,10 +80,11 @@
             <tr th:each="c:${page.list}">
                 <td th:text="${c.userName}"></td>
                 <td th:text="${c.userMail}">Mark</td>
+                <td th:text="${c.userStatus}==1 ? '已通过' : '未审核'">Mark</td>
                 <td>
-                    <a class="btn btn-success" th:href="@{/admin/viewUser(questionID=${c.userID})}">查看</a>
-                    <a class="btn btn-warning" th:href="@{/admin/editUser(questionID=${c.userID})}">修改</a>
-                    <a class="btn btn-danger" th:href="@{/admin/deletUser(questionID=${c.userID})}">删除</a>
+                    <a class="btn btn-secondary" th:href="@{/admin/viewUser(questionID=${c.userID})}">查看</a>
+                    <a class="btn btn-secondary" th:href="@{/admin/editUser(questionID=${c.userID})}">管理</a>
+                    <a class="btn btn-secondary" th:href="@{/admin/auditUser(userMail=${c.userMail})}">审核</a>
                 </td>
             </tr>
             </tbody>

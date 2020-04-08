@@ -9,4 +9,6 @@ public interface OJUserServlet {
     OJUserSignUpEnum signUp(OJUser ojUser);
 
     List<OJUser> selectAllOJUser();
+
+    boolean updateOJUserStatus(int status, String userMail);
 }

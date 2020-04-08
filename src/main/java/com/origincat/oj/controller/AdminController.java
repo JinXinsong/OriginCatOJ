@@ -5,13 +5,18 @@ import com.github.pagehelper.PageInfo;
 import com.origincat.oj.dao.OJUserDao;
 import com.origincat.oj.pojo.OJUser;
 import com.origincat.oj.pojo.Question;
+import com.origincat.oj.pojo.Student;
+import com.origincat.oj.pojo.StudentClass;
 import com.origincat.oj.servlet.OJUserServlet;
 import com.origincat.oj.servlet.QuestionServlet;
+import com.origincat.oj.servlet.StudentClassServlet;
+import com.origincat.oj.servlet.StudentServlet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 
@@ -21,11 +26,15 @@ public class AdminController {
 
     private QuestionServlet questionServlet;
     private OJUserServlet ojUserServlet;
+    private StudentServlet studentServlet;
+    private StudentClassServlet studentClassServlet;
 
-    public AdminController(QuestionServlet questionServlet, OJUserServlet ojUserServlet){
+    public AdminController(QuestionServlet questionServlet, OJUserServlet ojUserServlet, StudentServlet studentServlet, StudentClassServlet studentClassServlet){
 
         this.questionServlet = questionServlet;
         this.ojUserServlet = ojUserServlet;
+        this.studentServlet = studentServlet;
+        this.studentClassServlet = studentClassServlet;
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -75,6 +84,17 @@ public class AdminController {
         model.addAttribute("page", page);
 
         return "admin/user";
+    }
+
+    @RequestMapping(value = "/auditUser", method = RequestMethod.GET)
+    public String auditUser(Model model, @RequestParam(value = "userMail") String userMail){
+
+        Student student = studentServlet.selectStudentByMail(userMail);
+        StudentClass studentClass = studentClassServlet.selectStudentClassByID(student.getStudentClassID());
+        model.addAttribute("student", student);
+        model.addAttribute("studentClass", studentClass);
+
+        return "admin/auditUser";
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.GET)

@@ -17,5 +17,5 @@ public interface StudentDao {
     public Student selectStudentByStudentMail(String studentMail);
 
     @Insert("insert into Student (studentMail, studentClassID, studentName, studentID) values (#{studentMail}, #{studentClassID}, #{studentName}, #{studentID})")
-    public int insertStudentWithAll(Student student);
+    int insertStudentWithAll(Student student);
 }

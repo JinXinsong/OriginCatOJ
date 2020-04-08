@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand">OCOJ</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,51 +54,39 @@
     </form>
 </nav>
 
-<div style="height: 32px"></div>
+
 
 <div class="row">
-    <div class="col-2 list-group">
-        <a href="/admin/index" class="list-group-item list-group-item-action">所有题目</a>
-        <a href="/admin/createQuestion" class="list-group-item list-group-item-action">新建题目</a>
-        <a th:href="@{/admin/index(status=2)}" class="list-group-item list-group-item-action">未发布</a>
-        <a th:href="@{/admin/index(status=1)}" class="list-group-item list-group-item-action">已发布</a>
-        <a href="#" class="list-group-item list-group-item-action">已删除</a>
-    </div>
+    <!--    <div class="col-2">-->
+    <!--        <ul class="list-group">-->
+    <!--            <li class="list-group-item"><a href="/admin/index">所有题目</a></li>-->
+    <!--            <li class="list-group-item"><a href="/admin/createQuestion">新建题目</a></li>-->
+    <!--            <li class="list-group-item"><a href="#">未发布</a></li>-->
+    <!--            <li class="list-group-item"><a href="#">已发布</a></li>-->
+    <!--            <li class="list-group-item"><a href="#">已删除</a></li>-->
+    <!--        </ul>-->
+    <!--    </div>-->
     <div class="col">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" style="width: 15%;">编号</th>
-                <th scope="col" style="width: 45%">题目</th>
-                <th scope="col" style="width: 10%">通过率</th>
-                <th scope="col" style="width: 10%;">状态</th>
-                <th scope="col">选项</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="c:${page.list}">
-                <td th:text="${c.questionNum}"></td>
-                <td th:text="${c.questionTitle}">Mark</td>
-                <td th:text="${c.questionAccept} + '/' + ${c.questionInput}"></td>
-                <td th:text="${c.questionStatus} == 1 ? '已发布' : '未发布'"></td>
-                <td>
-                    <a class="btn btn-secondary" th:href="@{/admin/viewQuestion(questionID=${c.questionID})}">查看</a>
-                    <a class="btn btn-secondary" th:href="@{/admin/editQuestion(questionID=${c.questionID})}">修改</a>
-                    <button class="btn btn-dark deleteButton" th:value="${c.questionID}">删除</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div class="d-flex justify-content-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=0, status=${status})}">首页</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=${page.pageNum-1}, status=${status})}">上一页</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=${page.pageNum+1}, status=${status})}">下一页</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=${page.pages}, status=${status})}">尾页</a></li>
-                </ul>
-            </nav>
+        <div style="height: 32px;"></div>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><p class="mb-0" th:text="'邮箱：'+${student.getStudentMail()}"></p></li>
+                <li class="list-group-item"><p class="mb-0" th:text="'姓名：'+${student.getStudentName()}">姓名</p></li>
+                <li class="list-group-item"><p class="mb-0" th:text="'班级：'+${studentClass.getClassName()}">班级</p></li>
+                <li class="list-group-item"><p class="mb-0" th:text="'学号：'+${student.getStudentID()}">学号</p></li>
+            </ul>
+        </div>
+        <div style="height: 32px;"></div>
+        <div class="row form-group">
+            <div class="col">
+                <div type="button" class="btn btn-secondary col" id="accept">通过</div>
+            </div>
+            <div class="col">
+                <div type="button" class="btn btn-secondary col" id="waring">不通过</div>
+            </div>
+            <div class="col">
+                <div type="button" class="btn btn-secondary col" id="goBack">返回</div>
+            </div>
         </div>
     </div>
 </div>
@@ -105,24 +94,48 @@
 <script type="text/javascript" th:src="@{../js/jquery-3.4.1.js}"></script>
 <script type="text/javascript" th:src="@{../js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
-<script>
+<script th:inline="javascript">
     $(function () {
-        $(".deleteButton").click(function () {
+        $("#accept").click(function () {
             $.ajax({
                 type: "POST",
-                url: "/admin/deleteQuestion",
-                data: "questionID=" + $(this).val(),
+                url: "/admin/auditUser",
+                data: "status=1&&userMail="+[[${student.getStudentMail()}]],
                 success: function (result) {
+                    result = JSON.parse(JSON.stringify(result));
                     if (result.success) {
-                        alert("删除成功");
-                        location.reload();
+                        alert("操作成功");
+                        window.location.href = "/admin/user";
                     } else {
-                        alert("删除失败");
+                        alert("操作失败");
+                        window.location.href = "/admin/user";
                     }
                 }
-            });
+            })
         });
-    })
+
+        $("#waring").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/admin/auditUser",
+                data: "status=2&&userMail="+[[${student.getStudentMail()}]],
+                success: function (result) {
+                    result = JSON.parse(JSON.stringify(result));
+                    if (result.success) {
+                        alert("操作成功");
+                        window.location.href = "/admin/user";
+                    } else {
+                        alert("操作失败");
+                        window.location.href = "/admin/user";
+                    }
+                }
+            })
+        });
+
+        $("#goBack").click(function () {
+            window.location.href = "/admin/user";
+        })
+    });
 </script>
 </body>
 </html>

@@ -7,4 +7,6 @@ import com.origincat.oj.pojo.Student;
 public interface StudentServlet {
 
     public StudentSignUpEnum insertStudent(Student student, OJUser ojUser);
+
+    Student selectStudentByMail(String userMail);
 }
