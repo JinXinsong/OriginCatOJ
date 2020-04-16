@@ -1,6 +1,5 @@
 package com.origincat.oj.utils;
 
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;

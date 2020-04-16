@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -26,9 +27,11 @@ public class JudgeController {
     }
 
     @RequestMapping(value = "/judge", method = RequestMethod.POST)
-    public String judge(@RequestBody Map<String, Object> request){
+    public Map<String, Object> judge(@RequestBody Map<String, Object> request){
+        Map<String, Object> ModelMap = new HashMap<>();
         JudgeTask judgeTask = JSON.parseObject(JSON.toJSONString(request), JudgeTask.class);
-        JudgeResult judgeResult = judgeServlet.Judge(judgeTask);
-        return JSON.toJSONString(judgeResult);
+        Boolean aBoolean = judgeServlet.Judge(judgeTask);
+        ModelMap.put("success", aBoolean);
+        return ModelMap;
     }
 }

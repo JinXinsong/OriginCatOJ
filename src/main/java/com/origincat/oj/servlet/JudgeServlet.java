@@ -4,8 +4,11 @@ import com.origincat.oj.pojo.JudgeResult;
 import com.origincat.oj.pojo.JudgeTask;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
 public interface JudgeServlet {
 
-    JudgeResult Judge(JudgeTask judgeTask);
+    Boolean Judge(JudgeTask judgeTask);
+
+    List<JudgeResult> selectJudgeByUserID(String userID);
 }

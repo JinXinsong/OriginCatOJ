@@ -9,10 +9,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JudgeResult {
 
+    private String userMail;
+
     private String submitID;
-    private Integer status;
-    private Integer timeUsed;
-    private Integer memoryUsed;
+
+    private int questionNum;
+
+    private int status;
+
+    private int timeUsed;
+
+    private int memoryUsed;
+
     private String errorMessage;
 
+    private String time;
 }

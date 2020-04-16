@@ -76,7 +76,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String user(Model model, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size){
+    public String user(Model model, @RequestParam(value = "start", defaultValue = "0") int start,
+                       @RequestParam(value = "size", defaultValue = "10") int size){
 
         PageHelper.startPage(start,size,"userID desc");
         List<OJUser> ojUserList = ojUserServlet.selectAllOJUser();

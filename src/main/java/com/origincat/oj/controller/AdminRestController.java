@@ -29,7 +29,7 @@ public class AdminRestController {
     public Map<String, Object> createQuestion(@RequestBody Map<String , Object> requestBody) throws IOException {
         Map<String, Object> ModelMap = new HashMap<>();
 
-        String questionID = CreateRandomID.getRandomID();
+        String questionID = "Q"+CreateRandomID.getRandomID();
         String questionTitle = requestBody.get("questionTitle").toString();
         String questionInputSimple = requestBody.get("questionInputSimple").toString();
         String questionOutputSimple = requestBody.get("questionOutputSimple").toString();

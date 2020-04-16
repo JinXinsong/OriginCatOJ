@@ -17,6 +17,10 @@ public class JudgeTask {
 
     private String questionID;
 
+    private int questionNum;
+
+    private String userMail;
+
     private String source;
 
     private int timeLimit;

@@ -22,10 +22,10 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/admin/index">所有题目</a>
+                    <a class="dropdown-item" href="/student/index">所有题目</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/admin/index(status=2)}">已通过</a>
-                    <a class="dropdown-item" th:href="@{/admin/index(status=1)}">未通过</a>
+                    <a class="dropdown-item" th:href="@{/student/index(status=2)}">已通过</a>
+                    <a class="dropdown-item" th:href="@{/student/index(status=1)}">未通过</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -72,6 +72,7 @@
                         <label>题目编号</label>
                         <p th:text="${question.questionNum}"></p>
                     </div>
+                    <input type="hidden" th:value="${question.getQuestionID()}" id="data">
                     <div class="form-group">
                         <label>发布状态</label>
                         <p th:text="${question.questionStatus} == 1 ? '已发布' : '未发布'"></p>
@@ -133,7 +134,46 @@
     $(function () {
         $("#goBack").click(function () {
             window.history.back();
-        })
+        });
+
+        function getCookie(cname)
+        {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for(let i=0; i<ca.length; i++)
+            {
+                let c = ca[i].trim();
+                if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
+
+        $("#submit").click(function () {
+            let questionID = "" + $("#data").val()
+            let dataValue = {
+                "compilerID" : "2",
+                "questionID" : questionID,
+                "questionNum" : [[${question.questionNum}]],
+                "userMail" : getCookie("userMail"),
+                "source" : $("#exampleFormControlTextarea0").val(),
+                "timeLimit" : [[${question.questionTimeLimit}]],
+                "memoryLimit" : [[${question.questionMemoryLimit}]]
+            }
+            alert(dataValue);
+            $.ajax({
+                type: "POST",
+                url: "/judge",
+                data: JSON.stringify(dataValue),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (result) {
+                    result = JSON.parse(JSON.stringify(result));
+                    if (result.success) {
+                        alert([[${question.questionID}]]);
+                    }
+                }
+            })
+        });
     })
 </script>
 </body>

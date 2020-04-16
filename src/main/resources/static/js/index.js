@@ -130,6 +130,7 @@ $(function () {
                 success: function (result) {
                     result = JSON.parse(JSON.stringify(result));
                     if(result.success){
+                        document.cookie = "userMail="+$("#validationServer01").val();
                         window.location.href="/index/check";
                     }else{
                         alert(result.msg);
@@ -182,6 +183,7 @@ $(function () {
                 success: function (result) {
                     result = JSON.parse(JSON.stringify(result));
                     if(result.success){
+                        document.cookie = "userMail="+$("#validationServer07").val();
                         switch (result.result) {
                             case "check": {window.location.href = "/index/check"; break;}
                             case "student": {window.location.href = "/student/index"; break;}
