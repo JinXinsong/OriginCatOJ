@@ -17,10 +17,10 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/admin/index">所有题目</a>
+                    <a class="dropdown-item" href="/student/index">所有题目</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/admin/index(status=2)}">已通过</a>
-                    <a class="dropdown-item" th:href="@{/admin/index(status=1)}">未通过</a>
+                    <a class="dropdown-item" th:href="@{/student/index(status=2)}">已通过</a>
+                    <a class="dropdown-item" th:href="@{/student/index(status=1)}">未通过</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -64,9 +64,8 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col" style="width: 15%;">编号</th>
-                <th scope="col" style="width: 45%">题目</th>
+                <th scope="col" style="width: 65%">题目</th>
                 <th scope="col" style="width: 10%">通过率</th>
-                <th scope="col" style="width: 10%;">状态</th>
                 <th scope="col">选项</th>
             </tr>
             </thead>
@@ -75,7 +74,6 @@
                 <td th:text="${c.questionNum}"></td>
                 <td th:text="${c.questionTitle}">Mark</td>
                 <td th:text="${c.questionAccept} + '/' + ${c.questionInput}"></td>
-                <td th:text="${c.questionStatus} == 1 ? '已发布' : '未发布'"></td>
                 <td>
                     <a class="btn btn-secondary" th:href="@{/student/viewQuestion(questionID=${c.questionID})}">查看</a>
                 </td>

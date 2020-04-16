@@ -27,16 +27,19 @@ public class StudentController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size, @RequestParam(value = "status", defaultValue = "0") int status){
         PageHelper.startPage(start,size,"questionID");
-        List<Question> questionList = null;
-        if(status == 0){
-            questionList = questionServlet.selectAllQuestion();
-        }else {
-            questionList = questionServlet.selectQuestionByStatus(status);
-        }
+        List<Question> questionList = questionServlet.selectQuestionByStatus(1);
         PageInfo<Question> page = new PageInfo(questionList);
         model.addAttribute("page", page);
         model.addAttribute("status", status);
 
         return "student/index";
+    }
+
+    @RequestMapping(value = "/viewQuestion", method = RequestMethod.GET)
+    public String adminViewQuestion(Model model, @RequestParam(value = "questionID") String questionID){
+        Question question = questionServlet.selectQuestionByID(questionID);
+        model.addAttribute("question", question);
+
+        return "student/viewQuestion";
     }
 }

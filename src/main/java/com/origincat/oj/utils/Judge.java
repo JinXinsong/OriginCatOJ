@@ -15,12 +15,12 @@ import java.io.PrintWriter;
 public class Judge {
     public static JudgeResult judge(JudgeTask task) {
         JudgeResult result = new JudgeResult();
-        result.setSubmitId(task.getSubmitId());
-        String path = PropertiesUtil.StringValue("workspace") + "/" + task.getSubmitId();
+        result.setSubmitID(task.getSubmitID());
+        String path = PropertiesUtil.StringValue("workspace") + "/" + task.getSubmitID();
         File file = new File(path);
         file.mkdirs();
         try {
-            createFile(task.getCompilerId(), path, task.getSource());
+            createFile(task.getCompilerID(), path, task.getSource());
         } catch (Exception e) {
             e.printStackTrace();
             result.setStatus(8);
@@ -34,8 +34,8 @@ public class Judge {
             return result;
         }
         //compile the source
-        String message = compile(task.getCompilerId(), path);
-        if (message != null && task.getCompilerId() != 4) {
+        String message = compile(task.getCompilerID(), path);
+        if (message != null && task.getCompilerID() != 4) {
             result.setStatus(7);
             result.setErrorMessage(message);
             ExecutorUtil.exec("rm -rf " + path);
@@ -44,8 +44,8 @@ public class Judge {
         //chmod -R 755 path
         ExecutorUtil.exec("chmod -R 755 " + path);
         //judge
-        String process = process(task.getCompilerId(), path);
-        String judge_data = PropertiesUtil.StringValue("judge_data") + "/" + task.getProblemId();
+        String process = process(task.getCompilerID(), path);
+        String judge_data = PropertiesUtil.StringValue("judge_data") + "/" + task.getQuestionID();
         String cmd = "python3 " + PropertiesUtil.StringValue("judge_script") + " " + process + " " + judge_data + " " + path + " " + task.getTimeLimit() + " " + task.getMemoryLimit();
         parseToResult(cmd, result);
         //ExecutorUtil.exec("rm -rf " + path);

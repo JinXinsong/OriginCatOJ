@@ -11,19 +11,15 @@ import lombok.ToString;
 @ToString
 public class JudgeTask {
 
-    private String appName;
+    private String submitID;
 
-    private int submitId;
+    private int compilerID;
 
-    private int compilerId;
-
-    private int problemId;
+    private String questionID;
 
     private String source;
 
     private int timeLimit;
 
     private int memoryLimit;
-
-    private boolean isSpecial;
 }

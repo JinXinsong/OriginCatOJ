@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JudgeResult {
 
-    private Integer submitId;
+    private String submitID;
     private Integer status;
     private Integer timeUsed;
     private Integer memoryUsed;
