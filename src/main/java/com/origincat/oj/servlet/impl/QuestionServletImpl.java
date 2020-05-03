@@ -57,6 +57,32 @@ public class QuestionServletImpl implements QuestionServlet {
     }
 
     @Override
+    public List<Question> selectQuestionByAC() {
+        return questionDao.selectQuestionByAC();
+    }
+
+    @Override
+    public List<Question> selectQuestionByNoAC() {
+        List<Question> AC = questionDao.selectQuestionByAC();
+        List<Question> NoAC = questionDao.selectQuestionByNoAC();
+        List<Question> result = questionDao.selectQuestionByNoAC();
+        result.clear();
+        for(int i=0; i<NoAC.size(); i++){
+            boolean addSign = true;
+            for(int j=0; j<AC.size(); j++){
+                if(NoAC.get(i).getQuestionNum() == AC.get(j).getQuestionNum()){
+                    addSign = false;
+                    break;
+                }
+            }
+            if(addSign){
+                result.add(NoAC.get(i));
+            }
+        }
+        return result;
+    }
+
+    @Override
     public List<Question> selectQuestionByStatus(int questionStatus) {
         return questionDao.selectQuestionByStatus(questionStatus);
     }
@@ -64,6 +90,11 @@ public class QuestionServletImpl implements QuestionServlet {
     @Override
     public Question selectQuestionByID(String questionID) {
         return questionDao.selectQuestionByID(questionID);
+    }
+
+    @Override
+    public Question selectQuestionByNum(int questionNum) {
+        return questionDao.selectQuestionByNum(questionNum);
     }
 
     @Override

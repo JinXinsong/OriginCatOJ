@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OCOJ</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
+    <style>
+        label{
+            color: steelblue;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">OCOJ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/student/index">所有题目</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/student/index(status=2)}">已通过</a>
+                    <a class="dropdown-item" th:href="@{/student/index(status=1)}">未通过</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">比赛</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">所有比赛</a>
+                    <a class="dropdown-item" href="#">我的比赛</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">未开始</a>
+                    <a class="dropdown-item" href="#">已开始</a>
+                    <a class="dropdown-item" href="#">已结束</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/submit">提交</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/user">用户</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/about">关于</a>
+            </li>
+        </ul>
+    </div>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+
+<div style="height: 32px"></div>
+
+<div class="row">
+    <div class="col-2 list-group">
+        <a href="/student/submit" class="list-group-item list-group-item-action">所有提交</a>
+        <a th:href="@{/student/submit(status=2)}" class="list-group-item list-group-item-action">已通过</a>
+        <a th:href="@{/student/submit(status=1)}" class="list-group-item list-group-item-action">未通过</a>
+    </div>
+    <div class="col">
+        <div class="d-flex justify-content-center">
+            <div class="col-5" style="background-color: #F8F9FA">
+                <form>
+                    <div class="form-group">
+                        <label>题目编号</label>
+                        <p th:text="${question.questionNum}"></p>
+                    </div>
+                    <input type="hidden" th:value="${question.getQuestionID()}" id="data">
+                    <div class="form-group">
+                        <label>发布状态</label>
+                        <p th:text="${question.questionStatus} == 1 ? '已发布' : '未发布'"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>标题</label>
+                        <p th:text="${question.questionTitle}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>题目</label>
+                        <p th:text="${question.questionContent}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>输入样例</label>
+                        <p th:text="${question.questionInputSimple}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label>输出样例</label>
+                        <p th:text="${question.questionOutputSimple}"></p>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col">
+                            <label>时间限制</label>
+                            <p th:text="${question.questionTimeLimit}+'MS'"></p>
+                        </div>
+                        <div class="col">
+                            <label>内存限制</label>
+                            <p th:text="${question.questionMemoryLimit}+'K'"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>其他信息</label>
+                        <p th:text="${question.questionPrompt}">NULL</p>
+                    </div>
+                    <!--<form>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea0">提交代码</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea0" rows="15"></textarea>
+                        </div>
+                    </form>
+                    <div class="row form-group">
+                        <div class="col">
+                            <div type="button" class="btn btn-secondary col" id="submit">提交</div>
+                        </div>
+                        <div class="col">
+                            <div type="button" class="btn btn-secondary col" id="goBack">返回</div>
+                        </div>
+                    </div>-->
+                </form>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-5" style="background-color: #F8F9FA">
+                <div class="form-group">
+                    <label>提交编号</label>
+                    <p th:text="${submit.getSubmitID()}"></p>
+                </div>
+                <div class="form-group">
+                    <label>提交结果</label><br>
+                    <button th:text="${submit.getStatus()}" class = "td-status btn btn-secondary"></button>
+                </div>
+                <div class="form-group">
+                    <label>用时</label>
+                    <p th:text="${submit.getTimeUsed()} + 'Ms'"></p>
+                </div>
+                <div class="form-group">
+                    <label>内存</label>
+                    <p th:text="${submit.getMemoryUsed() + 'K'}"></p>
+                </div>
+                <div class="form-group">
+                    <label>错误信息</label>
+                    <p th:text="${submit.getErrorMessage()}">Null</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{../js/jquery-3.4.1.js}"></script>
+<script type="text/javascript" th:src="@{../js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
+<script>
+    let date = [
+        'Accepted',
+        'Presentation Error',
+        'Time Limit Exceeded',
+        'Memory Limit Exceeded',
+        'Wrong Answer',
+        'Runtime Error',
+        'Output Limit Exceeded',
+        'Compile Error',
+        'System Error'
+    ]
+    window.onload = function(){
+        let tb = document.getElementsByClassName("td-status");
+        console.log(tb.length);
+        for(let i=0; i<tb.length; i++){
+            if(tb.item(i).innerText == 0){
+                let classVal = tb.item(i).getAttribute("class");
+                classVal = classVal.replace("btn-secondary", "btn-success");
+                tb.item(i).setAttribute("class", classVal);
+            }else if(tb.item(i).innerText == 4){
+                let classVal = tb.item(i).getAttribute("class");
+                classVal = classVal.replace("btn-secondary", "btn-danger");
+                tb.item(i).setAttribute("class", classVal);
+            }else{
+                let classVal = tb.item(i).getAttribute("class");
+                classVal = classVal.replace("btn-secondary", "btn-warning");
+                tb.item(i).setAttribute("class", classVal);
+            }
+            tb.item(i).innerHTML = date[tb.item(i).innerText];
+
+            console.log(tb.item(i).innerText);
+        }
+    }
+
+    $(function () {
+        $("#goBack").click(function () {
+            window.history.back();
+        });
+
+        function getCookie(cname)
+        {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for(let i=0; i<ca.length; i++)
+            {
+                let c = ca[i].trim();
+                if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
+
+        $("#submit").click(function () {
+            let questionID = "" + $("#data").val()
+            let dataValue = {
+                "compilerID" : "2",
+                "questionID" : questionID,
+                "questionNum" : [[${question.questionNum}]],
+                "userMail" : getCookie("userMail"),
+                "source" : $("#exampleFormControlTextarea0").val(),
+                "timeLimit" : [[${question.questionTimeLimit}]],
+                "memoryLimit" : [[${question.questionMemoryLimit}]]
+            }
+            alert(dataValue);
+            $.ajax({
+                type: "POST",
+                url: "/judge",
+                data: JSON.stringify(dataValue),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (result) {
+                    result = JSON.parse(JSON.stringify(result));
+                    if (result.success) {
+                        alert([[${question.questionID}]]);
+                    }
+                }
+            })
+        });
+    })
+</script>
+</body>
+</html>

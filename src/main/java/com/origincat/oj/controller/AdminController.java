@@ -3,14 +3,8 @@ package com.origincat.oj.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.origincat.oj.dao.OJUserDao;
-import com.origincat.oj.pojo.OJUser;
-import com.origincat.oj.pojo.Question;
-import com.origincat.oj.pojo.Student;
-import com.origincat.oj.pojo.StudentClass;
-import com.origincat.oj.servlet.OJUserServlet;
-import com.origincat.oj.servlet.QuestionServlet;
-import com.origincat.oj.servlet.StudentClassServlet;
-import com.origincat.oj.servlet.StudentServlet;
+import com.origincat.oj.pojo.*;
+import com.origincat.oj.servlet.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -28,17 +24,21 @@ public class AdminController {
     private OJUserServlet ojUserServlet;
     private StudentServlet studentServlet;
     private StudentClassServlet studentClassServlet;
+    private JudgeServlet judgeServlet;
 
-    public AdminController(QuestionServlet questionServlet, OJUserServlet ojUserServlet, StudentServlet studentServlet, StudentClassServlet studentClassServlet){
+    public AdminController(QuestionServlet questionServlet, OJUserServlet ojUserServlet,
+                           StudentServlet studentServlet, StudentClassServlet studentClassServlet,
+                           JudgeServlet judgeServlet){
 
         this.questionServlet = questionServlet;
         this.ojUserServlet = ojUserServlet;
         this.studentServlet = studentServlet;
         this.studentClassServlet = studentClassServlet;
+        this.judgeServlet = judgeServlet;
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String adminIndex(Model model, @RequestParam(value = "start", defaultValue = "0") int start, @RequestParam(value = "size", defaultValue = "10") int size, @RequestParam(value = "status", defaultValue = "0") int status){
+    public String adminIndex(Model model, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "10") int size, @RequestParam(value = "status", defaultValue = "0") int status){
 
         PageHelper.startPage(start,size,"questionID desc");
         List<Question> questionList = null;
@@ -76,7 +76,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String user(Model model, @RequestParam(value = "start", defaultValue = "0") int start,
+    public String user(Model model, @RequestParam(value = "start", defaultValue = "1") int start,
                        @RequestParam(value = "size", defaultValue = "10") int size){
 
         PageHelper.startPage(start,size,"userID desc");
@@ -99,8 +99,44 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.GET)
-    public String submit(Model model){
+    public String submit(Model model, @RequestParam(value = "start", defaultValue = "1") int start,
+                         @RequestParam(value = "size", defaultValue = "10") int size,
+                         @RequestParam(value = "status", defaultValue = "0") int status,
+                         HttpServletRequest request){
+        StringBuffer buffer = new StringBuffer();
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("userMail")){
+                    buffer.append(cookie.getValue());
+                }
+            }
+        }
+        String userMail = buffer.toString();
+        PageHelper.startPage(start,size,"submitID desc");
+        List<JudgeResult> judgeResultList = null;
+        if(status == 0){
+            judgeResultList = judgeServlet.selectJudge();
+        }else if(status == 2){
+            judgeResultList = judgeServlet.selectACJudge();
+        }else if(status == 1){
+            judgeResultList = judgeServlet.selectNoACJudge();
+        }
+        PageInfo<JudgeResult> page = new PageInfo(judgeResultList);
+        model.addAttribute("page", page);
+        model.addAttribute("status", status);
+
         return "admin/submit";
+    }
+
+    @RequestMapping(value = "/viewSubmit", method = RequestMethod.GET)
+    public String viewSubmit(Model model, @RequestParam(value = "submitID") String submitID){
+        JudgeResult judgeResult = judgeServlet.selectJudgeBySubmitID(submitID);
+        Question question = questionServlet.selectQuestionByNum(judgeResult.getQuestionNum());
+        model.addAttribute("submit", judgeResult);
+        model.addAttribute("question", question);
+
+        return "admin/viewSubmit";
     }
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)

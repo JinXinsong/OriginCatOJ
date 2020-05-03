@@ -16,15 +16,27 @@ public interface JudgeDao {
     @Select("select * from JudgeResult where status = 0 and userMail = #{userMail}")
     List<JudgeResult> selectACJudgeByID(String userMail);
 
+    @Select("select * from JudgeResult where status != 0 and userMail = #{userMail}")
+    List<JudgeResult> selectNoACJudgeByID(String userMail);
+
     @Select("select * from JudgeResult where userMail = #{userMail}")
     List<JudgeResult> selectJudgeByID(String userMail);
 
-    @Select("select count(*) as nums from judgeResult where userMail = #{userMail}")
-    int selectJudgeByIDNum(String userMail);
+    @Select("select * from JudgeResult where submitID = #{submitID}")
+    JudgeResult selectJudgeBySubmitID(String submitID);
 
     @Insert("insert into JudgeResult (userMail, submitID, questionNum, status, timeUsed, memoryUsed, errorMessage, time) values (#{userMail}, #{submitID}, #{questionNum}, #{status}, #{timeUsed}, #{memoryUsed}, #{errorMessage}, #{time})")
     int insertJudge(JudgeResult judgeResult);
 
     @Update("update JudgeResult set status = #{status}, timeUsed = #{timeUsed}, memoryUsed = #{memoryUsed}, errorMessage = #{errorMessage} where submitID = #{submitID}")
     int updateJudge(JudgeResult judgeResult);
+
+    @Select("select * from JudgeResult")
+    List<JudgeResult> selectJudge();
+
+    @Select("select * from JudgeResult where status = 0")
+    List<JudgeResult> selectACJudge();
+
+    @Select("select * from JudgeResult where status != 0")
+    List<JudgeResult> selectNoACJudge();
 }

@@ -2,8 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>admin</title>
+    <title>OCOJ</title>
+
     <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
+    <style>
+        label{
+            color: steelblue;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -61,38 +67,71 @@
         <a th:href="@{/admin/submit(status=1)}" class="list-group-item list-group-item-action">未通过</a>
     </div>
     <div class="col">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" style="width: 15%;">提交编号</th>
-                <th scope="col" style="width: 50%">题目编号</th>
-                <th scope="col" style="width: 20%">结果</th>
-                <th scope="col">选项</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="c:${page.list}">
-                <td th:text="${c.submitID}"></td>
-                <td th:text="${c.questionNum}"></td>
-                <td>
-                    <a class="btn btn-secondary td-status" th:href="@{/admin/viewSubmit(submitID=${c.submitID})}" th:text="${c.status}">查看</a>
-                </td>
-                <td>
-                    <a class="btn btn-secondary" th:href="@{/admin/viewSubmit(submitID=${c.submitID})}">查看</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
         <div class="d-flex justify-content-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/submit(start=1, status=${status})}">首页</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/submit(start=${page.pageNum-1}, status=${status})}">上一页</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/submit(start=${page.pageNum+1}, status=${status})}">下一页</a></li>
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/submit(start=${page.pages}, status=${status})}">尾页</a></li>
-                </ul>
-            </nav>
+            <div class="col-5" style="background-color: #F8F9FA">
+                <div class="form-group">
+                    <label>题目编号</label>
+                    <p th:text="${question.questionNum}"></p>
+                </div>
+                <input type="hidden" th:value="${question.getQuestionID()}" id="data">
+                <div class="form-group">
+                    <label>发布状态</label>
+                    <p th:text="${question.questionStatus} == 1 ? '已发布' : '未发布'"></p>
+                </div>
+                <div class="form-group">
+                    <label>标题</label>
+                    <p th:text="${question.questionTitle}"></p>
+                </div>
+                <div class="form-group">
+                    <label>题目</label>
+                    <p th:text="${question.questionContent}"></p>
+                </div>
+                <div class="form-group">
+                    <label>输入样例</label>
+                    <p th:text="${question.questionInputSimple}"></p>
+                </div>
+                <div class="form-group">
+                    <label>输出样例</label>
+                    <p th:text="${question.questionOutputSimple}"></p>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        <label>时间限制</label>
+                        <p th:text="${question.questionTimeLimit}+'MS'"></p>
+                    </div>
+                    <div class="col">
+                        <label>内存限制</label>
+                        <p th:text="${question.questionMemoryLimit}+'K'"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>其他信息</label>
+                    <p th:text="${question.questionPrompt}">NULL</p>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-5" style="background-color: #F8F9FA">
+                <div class="form-group">
+                    <label>提交编号</label>
+                    <p th:text="${submit.getSubmitID()}"></p>
+                </div>
+                <div class="form-group">
+                    <label>提交结果</label><br>
+                    <button th:text="${submit.getStatus()}" class = "td-status btn btn-secondary"></button>
+                </div>
+                <div class="form-group">
+                    <label>用时</label>
+                    <p th:text="${submit.getTimeUsed()} + 'Ms'"></p>
+                </div>
+                <div class="form-group">
+                    <label>内存</label>
+                    <p th:text="${submit.getMemoryUsed() + 'K'}"></p>
+                </div>
+                <div class="form-group">
+                    <label>错误信息</label>
+                    <p th:text="${submit.getErrorMessage()}">Null</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

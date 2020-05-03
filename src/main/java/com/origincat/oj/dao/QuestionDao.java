@@ -25,6 +25,15 @@ public interface QuestionDao {
     @Select("select * from Question where questionID = #{questionID}")
     Question selectQuestionByID(String questionID);
 
+    @Select("select * from Question where questionNum = #{questionNum}")
+    Question selectQuestionByNum(int questionNum);
+
+    @Select("select distinct qu.* from Question as qu, JudgeResult as ju where qu.questionNum = ju.questionNum and ju.status=0 and qu.questionStatus = 1")
+    List<Question> selectQuestionByAC();
+
+    @Select("select distinct qu.* from Question as qu, JudgeResult as ju where qu.questionNum = ju.questionNum and ju.status!=0 and qu.questionStatus = 1")
+    List<Question> selectQuestionByNoAC();
+
     @Update("update Question set questionTitle = #{questionTitle}, questionStatus = #{questionStatus}, questionTimeLimit = #{questionTimeLimit}, questionMemoryLimit = #{questionMemoryLimit}, questionContent = #{questionContent}, questionInputSimple = #{questionInputSimple}, questionOutputSimple = #{questionOutputSimple}, questionPrompt = #{questionPrompt} where questionID = #{questionID}")
     int editQuestion(Question question);
 

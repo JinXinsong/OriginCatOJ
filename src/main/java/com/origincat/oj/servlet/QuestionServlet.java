@@ -12,9 +12,15 @@ public interface QuestionServlet {
 
     List<Question> selectAllQuestion();
 
+    List<Question> selectQuestionByAC();
+
+    List<Question> selectQuestionByNoAC();
+
     List<Question> selectQuestionByStatus(int questionStatus);
 
     Question selectQuestionByID(String questionID);
+
+    Question selectQuestionByNum(int questionNum);
 
     boolean editQuestion(Question question);
 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OCOJ</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
+    <style>
+        label{
+            color: steelblue;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">OCOJ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/student/index">所有题目</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/student/index(status=2)}">已通过</a>
+                    <a class="dropdown-item" th:href="@{/student/index(status=1)}">未通过</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">比赛</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">所有比赛</a>
+                    <a class="dropdown-item" href="#">我的比赛</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">未开始</a>
+                    <a class="dropdown-item" href="#">已开始</a>
+                    <a class="dropdown-item" href="#">已结束</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/submit">提交</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/user">用户</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/about">关于</a>
+            </li>
+        </ul>
+    </div>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+
+<div style="height: 32px"></div>
+
+<div>
+    <h1>V1.0.0 Beta</h1>
+    <p>完成大部分OJ常用功能</p>
+</div>
+
+<script type="text/javascript" th:src="@{../js/jquery-3.4.1.js}"></script>
+<script type="text/javascript" th:src="@{../js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -41,4 +41,34 @@ public class JudgeServletImpl implements JudgeServlet {
     public List<JudgeResult> selectJudgeByUserID(String userMail) {
         return judgeDao.selectJudgeByID(userMail);
     }
+
+    @Override
+    public JudgeResult selectJudgeBySubmitID(String submitID) {
+        return judgeDao.selectJudgeBySubmitID(submitID);
+    }
+
+    @Override
+    public List<JudgeResult> selectACJudgeByUserID(String userID) {
+        return judgeDao.selectACJudgeByID(userID);
+    }
+
+    @Override
+    public List<JudgeResult> selectNoACJudgeByUserID(String userID) {
+        return judgeDao.selectNoACJudgeByID(userID);
+    }
+
+    @Override
+    public List<JudgeResult> selectJudge() {
+        return judgeDao.selectJudge();
+    }
+
+    @Override
+    public List<JudgeResult> selectACJudge() {
+        return judgeDao.selectACJudge();
+    }
+
+    @Override
+    public List<JudgeResult> selectNoACJudge() {
+        return judgeDao.selectNoACJudge();
+    }
 }
