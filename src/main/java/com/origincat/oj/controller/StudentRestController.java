@@ -17,12 +17,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class JudgeController {
+public class StudentRestController {
 
     private JudgeServlet judgeServlet;
 
     @Autowired
-    public JudgeController(JudgeServlet judgeServlet){
+    public StudentRestController(JudgeServlet judgeServlet){
         this.judgeServlet = judgeServlet;
     }
 

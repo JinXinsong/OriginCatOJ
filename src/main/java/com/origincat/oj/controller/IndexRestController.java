@@ -15,13 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class SignController {
+public class IndexRestController {
 
     private StudentServlet studentServlet;
     private SelectOJUserServlet selectOJUserServlet;
 
     @Autowired
-    public SignController(StudentServlet studentServlet, SelectOJUserServlet selectOJUserServlet){
+    public IndexRestController(StudentServlet studentServlet, SelectOJUserServlet selectOJUserServlet){
         this.studentServlet = studentServlet;
         this.selectOJUserServlet = selectOJUserServlet;
     }

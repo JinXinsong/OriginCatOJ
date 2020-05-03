@@ -26,9 +26,4 @@ public class IndexController {
         model.addAttribute("studentClassList", studentClassList);
         return "index/index";
     }
-
-    @RequestMapping(value = "/student/index")
-    public String studentIndex(){
-        return "student/index";
-    }
 }
