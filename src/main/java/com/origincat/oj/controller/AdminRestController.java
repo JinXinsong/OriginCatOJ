@@ -1,6 +1,8 @@
 package com.origincat.oj.controller;
 
+import com.origincat.oj.pojo.Contest;
 import com.origincat.oj.pojo.Question;
+import com.origincat.oj.servlet.ContestServlet;
 import com.origincat.oj.servlet.OJUserServlet;
 import com.origincat.oj.servlet.QuestionServlet;
 import com.origincat.oj.utils.CreateRandomID;
@@ -9,23 +11,27 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admin", method = RequestMethod.POST)
 public class AdminRestController {
 
     private QuestionServlet questionServlet;
     private OJUserServlet ojUserServlet;
+    private ContestServlet contestServlet;
 
     @Autowired
-    public AdminRestController(QuestionServlet questionServlet, OJUserServlet ojUserServlet){
+    public AdminRestController(QuestionServlet questionServlet, OJUserServlet ojUserServlet,
+                               ContestServlet contestServlet){
         this.questionServlet = questionServlet;
         this.ojUserServlet = ojUserServlet;
+        this.contestServlet = contestServlet;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/createQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/createQuestion")
     public Map<String, Object> createQuestion(@RequestBody Map<String , Object> requestBody) throws IOException {
         Map<String, Object> ModelMap = new HashMap<>();
 
@@ -55,17 +61,13 @@ public class AdminRestController {
         question.setQuestionOutputSimple(questionOutputSimple);
         question.setQuestionPrompt(questionPrompt);
 
-        if(questionServlet.createQuestion(question, questionInput, questionOutput)){
-            ModelMap.put("success", true);
-        }else {
-            ModelMap.put("success", false);
-        }
+        ModelMap.put("success", questionServlet.createQuestion(question, questionInput, questionOutput));
 
         return ModelMap;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/editQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/editQuestion")
     public Map<String, Object> editQuestion(@RequestBody Map<String , Object> requestBody) throws IOException {
         Map<String, Object> ModelMap = new HashMap<>();
 
@@ -90,41 +92,55 @@ public class AdminRestController {
         question.setQuestionOutputSimple(questionOutputSimple);
         question.setQuestionPrompt(questionPrompt);
 
-        if(questionServlet.editQuestion(question)){
-            ModelMap.put("success", true);
-        }else {
-            ModelMap.put("success", false);
-        }
+        ModelMap.put("success", questionServlet.editQuestion(question));
 
         return ModelMap;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/deleteQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteQuestion")
     public Map<String, Object> deleteQuestion(@RequestParam(value = "questionID") String questionID){
         Map<String, Object> ModelMap = new HashMap<>();
 
-        if(questionServlet.deleteQuestion(questionID)){
-            ModelMap.put("success", true);
-        }else {
-            ModelMap.put("success", false);
-        }
+        ModelMap.put("success", questionServlet.deleteQuestion(questionID));
 
         return ModelMap;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/auditUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/auditUser")
     public Map<String, Object> auditUser(@RequestParam(value = "userMail") String userMail, @RequestParam(value = "status") int status){
         Map<String, Object> ModelMap = new HashMap<>();
 
-        if(ojUserServlet.updateOJUserStatus(status, userMail)){
-            ModelMap.put("success", true);
-        }else {
-            ModelMap.put("success", false);
-        }
+        ModelMap.put("success", ojUserServlet.updateOJUserStatus(status, userMail));
 
         return ModelMap;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/createContest")
+    public Map<String, Object> createContest(@RequestBody Map<String , Object> requestBody){
+        Map<String, Object> modelMap = new HashMap<>();
+
+        String contestName = requestBody.get("contestName").toString();
+        String startTime = requestBody.get("startTime").toString();
+        String endTime = requestBody.get("endTime").toString();
+        String contestInf = requestBody.get("contestInf").toString();
+        String[] questionList = requestBody.get("questionList").toString().replace("]", "").replace("[", "").replace(" ", "").split(",");
+
+        Contest contest = new Contest();
+        contest.setContestInf(contestInf);
+        contest.setContestName(contestName);
+        contest.setStartTime(startTime);
+        contest.setEndTime(endTime);
+
+        if(contestServlet.createContest(contest, questionList)){
+            modelMap.put("success", true);
+        }else {
+            modelMap.put("success", false);
+            modelMap.put("msg", "信息错误");
+        }
+
+        return modelMap;
+    }
 }

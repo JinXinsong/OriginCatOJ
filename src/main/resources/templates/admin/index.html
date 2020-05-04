@@ -92,7 +92,7 @@
         <div class="d-flex justify-content-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=0, status=${status})}">首页</a></li>
+                    <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=1, status=${status})}">首页</a></li>
                     <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=${page.pageNum-1}, status=${status})}">上一页</a></li>
                     <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=${page.pageNum+1}, status=${status})}">下一页</a></li>
                     <li class="page-item"><a class="page-link" th:href="@{/admin/index(start=${page.pages}, status=${status})}">尾页</a></li>

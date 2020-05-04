@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.servlet.http.Cookie;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/admin", method = RequestMethod.GET)
 public class AdminController {
 
     private QuestionServlet questionServlet;
@@ -25,19 +26,21 @@ public class AdminController {
     private StudentServlet studentServlet;
     private StudentClassServlet studentClassServlet;
     private JudgeServlet judgeServlet;
+    private ContestServlet contestServlet;
 
     public AdminController(QuestionServlet questionServlet, OJUserServlet ojUserServlet,
                            StudentServlet studentServlet, StudentClassServlet studentClassServlet,
-                           JudgeServlet judgeServlet){
+                           JudgeServlet judgeServlet, ContestServlet contestServlet){
 
         this.questionServlet = questionServlet;
         this.ojUserServlet = ojUserServlet;
         this.studentServlet = studentServlet;
         this.studentClassServlet = studentClassServlet;
         this.judgeServlet = judgeServlet;
+        this.contestServlet = contestServlet;
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/index")
     public String adminIndex(Model model, @RequestParam(value = "start", defaultValue = "1") int start, @RequestParam(value = "size", defaultValue = "10") int size, @RequestParam(value = "status", defaultValue = "0") int status){
 
         PageHelper.startPage(start,size,"questionID desc");
@@ -54,7 +57,7 @@ public class AdminController {
         return "admin/index";
     }
 
-    @RequestMapping(value = "/createQuestion", method = RequestMethod.GET)
+    @RequestMapping(value = "/createQuestion")
     public String adminCreateQuestion(){
         return "admin/createQuestion";
     }
@@ -67,7 +70,7 @@ public class AdminController {
         return "admin/editQuestion";
     }
 
-    @RequestMapping(value = "/viewQuestion", method = RequestMethod.GET)
+    @RequestMapping(value = "/viewQuestion")
     public String adminViewQuestion(Model model, @RequestParam(value = "questionID") String questionID){
         Question question = questionServlet.selectQuestionByID(questionID);
         model.addAttribute("question", question);
@@ -75,7 +78,7 @@ public class AdminController {
         return "admin/viewQuestion";
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/user")
     public String user(Model model, @RequestParam(value = "start", defaultValue = "1") int start,
                        @RequestParam(value = "size", defaultValue = "10") int size){
 
@@ -87,7 +90,7 @@ public class AdminController {
         return "admin/user";
     }
 
-    @RequestMapping(value = "/auditUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/auditUser")
     public String auditUser(Model model, @RequestParam(value = "userMail") String userMail){
 
         Student student = studentServlet.selectStudentByMail(userMail);
@@ -98,21 +101,10 @@ public class AdminController {
         return "admin/auditUser";
     }
 
-    @RequestMapping(value = "/submit", method = RequestMethod.GET)
+    @RequestMapping(value = "/submit")
     public String submit(Model model, @RequestParam(value = "start", defaultValue = "1") int start,
                          @RequestParam(value = "size", defaultValue = "10") int size,
-                         @RequestParam(value = "status", defaultValue = "0") int status,
-                         HttpServletRequest request){
-        StringBuffer buffer = new StringBuffer();
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("userMail")){
-                    buffer.append(cookie.getValue());
-                }
-            }
-        }
-        String userMail = buffer.toString();
+                         @RequestParam(value = "status", defaultValue = "0") int status){
         PageHelper.startPage(start,size,"submitID desc");
         List<JudgeResult> judgeResultList = null;
         if(status == 0){
@@ -129,7 +121,7 @@ public class AdminController {
         return "admin/submit";
     }
 
-    @RequestMapping(value = "/viewSubmit", method = RequestMethod.GET)
+    @RequestMapping(value = "/viewSubmit")
     public String viewSubmit(Model model, @RequestParam(value = "submitID") String submitID){
         JudgeResult judgeResult = judgeServlet.selectJudgeBySubmitID(submitID);
         Question question = questionServlet.selectQuestionByNum(judgeResult.getQuestionNum());
@@ -139,8 +131,36 @@ public class AdminController {
         return "admin/viewSubmit";
     }
 
-    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    @RequestMapping(value = "/about")
     public String about(Model model){
         return "admin/about";
+    }
+
+    @RequestMapping(value = "/contest")
+    public String contest(Model model, @RequestParam(value = "start", defaultValue = "1") int start,
+                          @RequestParam(value = "size", defaultValue = "10") int size,
+                          @RequestParam(value = "status", defaultValue = "0") int status){
+
+        PageHelper.startPage(start,size,"contestNum desc");
+        List<Contest> contestList = null;
+        if(status == 0){
+            contestList = contestServlet.selectContest();
+        }else if(status == 2){
+            contestList = contestServlet.selectContest();
+        }else if(status == 1){
+            contestList = contestServlet.selectContest();
+        }else if(status == 3){
+            contestList = contestServlet.selectContest();
+        }
+        PageInfo<JudgeResult> page = new PageInfo(contestList);
+        model.addAttribute("page", page);
+        model.addAttribute("status", status);
+
+        return "admin/contest";
+    }
+
+    @RequestMapping(value = "/createContest")
+    public String createContest(Model model){
+        return "admin/createContest";
     }
 }

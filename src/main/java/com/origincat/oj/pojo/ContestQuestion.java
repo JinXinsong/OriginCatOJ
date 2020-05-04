@@ -8,7 +8,7 @@ public class ContestQuestion {
 
     String contestID;
 
-    String questionID;
+    int questionNum;
 
     int inputNum;
 

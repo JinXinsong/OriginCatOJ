@@ -7,6 +7,7 @@ import com.origincat.oj.servlet.JudgeServlet;
 import com.origincat.oj.utils.CreateRandomID;
 import com.origincat.oj.utils.Judge;
 import com.origincat.oj.utils.TimeString;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class JudgeServletImpl implements JudgeServlet {
 
     private JudgeDao judgeDao;
 
+    @Autowired
     public JudgeServletImpl(JudgeDao judgeDao){
         this.judgeDao = judgeDao;
     }
