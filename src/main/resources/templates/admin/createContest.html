@@ -67,61 +67,66 @@
             <div class="col-10">
                 <form>
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea0">标题</label>
+                        <label>标题</label>
                         <input class="form-control" id="title">
                     </div>
 
+                    <div class="form-group">
+                        <label>开始时间</label>
+                    </div>
                     <div class="row form-group">
-                        <label>开始时间</label><br>
                         <div class="col">
                             <label>年</label>
-                            <input class="form-control" id="startTime0">
+                            <input class="form-control" id="startTime0" placeholder="输入四位数字">
                         </div>
                         <div class="col">
                             <label>月</label>
-                            <input class="form-control" id="startTime1">
+                            <input class="form-control" id="startTime1" placeholder="输入两位数字">
                         </div>
                         <div class="col">
                             <label>日</label>
-                            <input class="form-control" id="startTime2">
+                            <input class="form-control" id="startTime2" placeholder="输入两位数字">
                         </div>
                         <div class="col">
                             <label >时</label>
-                            <input class="form-control" id="startTime3">
+                            <input class="form-control" id="startTime3" placeholder="输入两位数字">
                         </div>
                         <div class="col">
                             <label>分</label>
-                            <input class="form-control" id="startTime4">
+                            <input class="form-control" id="startTime4" placeholder="输入两位数字">
                         </div>
                     </div>
 
+
+                    <div class="form-group">
+                        <label>结束时间</label>
+                    </div>
                     <div class="row form-group">
-                        <label>结束时间</label><br>
                         <div class="col">
                             <label>年</label>
-                            <input class="form-control" id="endTime0">
+                            <input class="form-control" id="endTime0" placeholder="输入四位数字">
                         </div>
                         <div class="col">
                             <label>月</label>
-                            <input class="form-control" id="endTime1">
+                            <input class="form-control" id="endTime1" placeholder="输入两位数字">
                         </div>
                         <div class="col">
                             <label>日</label>
-                            <input class="form-control" id="endTime2">
+                            <input class="form-control" id="endTime2" placeholder="输入两位数字">
                         </div>
                         <div class="col">
                             <label >时</label>
-                            <input class="form-control" id="endTime3">
+                            <input class="form-control" id="endTime3" placeholder="输入两位数字">
                         </div>
                         <div class="col">
                             <label>分</label>
-                            <input class="form-control" id="endTime4">
+                            <input class="form-control" id="endTime4" placeholder="输入两位数字">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label>比赛信息</label>
-                        <textarea class="form-control" id="contestInf" rows="1">NULL</textarea>
+                        <textarea class="form-control" id="contestInf" rows="5"></textarea>
                     </div>
 
                     <div class="row form-group">
@@ -132,13 +137,13 @@
                             <div type="button" class="btn btn-dark deleteTest">删除</div>
                         </div>
                     </div>
-                    <div type="button" class="btn btn-primary col btn-block form-group" id="addTest">添加题目</div>
+                    <div type="button" class="btn btn-secondary col btn-block form-group" id="addTest">添加题目</div>
                     <div class="row form-group">
                         <div class="col">
-                            <div type="button" class="btn btn-danger col" id="goBack">返回</div>
+                            <div type="button" class="btn btn-outline-secondary col" id="goBack">返回</div>
                         </div>
                         <div class="col">
-                            <div type="button" class="btn btn-success col" id="submit">提交</div>
+                            <div type="button" class="btn btn-outline-success col" id="submit">提交</div>
                         </div>
                     </div>
                 </form>
@@ -174,11 +179,65 @@
             let questionList = [];
             for(let i=0; i<=testNumber; i++){
                 let input = "input"+i;
+                let key = false;
                 if($("#"+input)[0]){
-                    console.log($("#"+input).val());
-                    questionList.push($("#"+input).val());
+                    $.ajax({
+                        type: "POST",
+                        async: false,
+                        url: "/admin/QuestionCheck",
+                        data: JSON.stringify({
+                            "questionNum" : $("#"+input).val()
+                        }),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (result) {
+                            result = JSON.parse(JSON.stringify(result));
+                            console.log(result);
+                            key = result.success;
+                        }d
+                    })
+                    if(key)
+                        questionList.push($("#"+input).val());
+                    else{
+                        alert("题目"+$("#"+input).val()+"不存在");
+                        location.reload();
+                    }
                 }
             }
+
+            if(!/\d{4}$/.test($("#startTime0").val())){
+                alert("请输入正确的开始年份");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#startTime1").val()) || $("#startTime1").val()<1 || $("#startTime1").val()>12){
+                alert("请输入正确的开始月份");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#startTime2").val()) || $("#startTime2").val()<1 || $("#startTime2").val()>31){
+                alert("请输入正确的开始日");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#startTime3").val()) || $("#startTime3").val()<0 || $("#startTime3").val()>23){
+                alert("请输入正确的开始时");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#startTime4").val()) || $("#startTime4").val()<0 || $("#startTime4").val()>59){
+                alert("请输入正确的开始分");
+                location.reload();
+            }
+            if(!/\d{4}$/.test($("#endTime0").val())){
+                alert("请输入正确的结束年份");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#endTime1").val()) || $("#endTime1").val()<1 || $("#endTime1").val()>12){
+                alert("请输入正确的结束月份");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#endTime2").val()) || $("#endTime2").val()<1 || $("#endTime2").val()>31){
+                alert("请输入正确的结束日");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#endTime3").val()) || $("#endTime3").val()<0 || $("#endTime3").val()>23){
+                alert("请输入正确的结束时");
+                location.reload();
+            }else if(!/\d{2}$/.test($("#endTime4").val()) || $("#endTime4").val()<0 || $("#endTime4").val()>59){
+                alert("请输入正确的结束分");
+                location.reload();
+            }
+
             let startTime = $("#startTime0").val() + $("#startTime1").val() + $("#startTime2").val() + $("#startTime3").val() + $("#startTime4").val();
             let endTime = $("#endTime0").val() + $("#endTime1").val() + $("#endTime2").val() + $("#endTime3").val() + $("#endTime4").val();
             let dateValue = {
@@ -192,6 +251,7 @@
             console.log(dateValue);
             $.ajax({
                 type: "POST",
+                async: false,
                 url: "/admin/createContest",
                 data: JSON.stringify(dateValue),
                 contentType: "application/json",

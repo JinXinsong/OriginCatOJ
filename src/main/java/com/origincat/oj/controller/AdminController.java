@@ -163,4 +163,14 @@ public class AdminController {
     public String createContest(Model model){
         return "admin/createContest";
     }
+
+    @RequestMapping(value = "/viewContest")
+    public String viewContest(Model model, @RequestParam(value = "contestID") String contestID){
+        model.addAttribute("contest", contestServlet.selectContestByID(contestID));
+        model.addAttribute("questionList", contestServlet.selectQuestionListByID(contestID));
+        model.addAttribute("JudgeResult", contestServlet.selectJudgeResultByContest(contestID));
+        model.addAttribute("contestUser", contestServlet.selectContestUser(contestID));
+
+        return "admin/viewContest";
+    }
 }

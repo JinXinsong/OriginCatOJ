@@ -1,6 +1,7 @@
 package com.origincat.oj.servlet.impl;
 
 import com.origincat.oj.dao.JudgeDao;
+import com.origincat.oj.dao.QuestionDao;
 import com.origincat.oj.pojo.JudgeResult;
 import com.origincat.oj.pojo.JudgeTask;
 import com.origincat.oj.servlet.JudgeServlet;
@@ -16,9 +17,11 @@ import java.util.List;
 public class JudgeServletImpl implements JudgeServlet {
 
     private JudgeDao judgeDao;
+    private QuestionDao questionDao;
 
     @Autowired
-    public JudgeServletImpl(JudgeDao judgeDao){
+    public JudgeServletImpl(JudgeDao judgeDao, QuestionDao questionDao){
+        this.questionDao = questionDao;
         this.judgeDao = judgeDao;
     }
 
@@ -29,6 +32,7 @@ public class JudgeServletImpl implements JudgeServlet {
         JudgeResult judgeResult = new JudgeResult();
         judgeResult.setSubmitID(submitID);
         judgeResult.setQuestionNum(judgeTask.getQuestionNum());
+        judgeResult.setQuestionTitle(questionDao.selectQuestionByNum(judgeTask.getQuestionNum()).getQuestionTitle());
         judgeResult.setUserMail(judgeTask.getUserMail());
         judgeResult.setStatus(999);
         judgeResult.setTime(TimeString.getTime());

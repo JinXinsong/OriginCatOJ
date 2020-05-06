@@ -2,10 +2,11 @@ package com.origincat.oj.controller;
 
 import com.origincat.oj.pojo.Contest;
 import com.origincat.oj.pojo.Question;
-import com.origincat.oj.servlet.ContestServlet;
-import com.origincat.oj.servlet.OJUserServlet;
-import com.origincat.oj.servlet.QuestionServlet;
+import com.origincat.oj.pojo.Student;
+import com.origincat.oj.pojo.StudentClass;
+import com.origincat.oj.servlet.*;
 import com.origincat.oj.utils.CreateRandomID;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +22,18 @@ public class AdminRestController {
     private QuestionServlet questionServlet;
     private OJUserServlet ojUserServlet;
     private ContestServlet contestServlet;
+    private StudentServlet studentServlet;
+    private StudentClassServlet studentClassServlet;
 
     @Autowired
     public AdminRestController(QuestionServlet questionServlet, OJUserServlet ojUserServlet,
-                               ContestServlet contestServlet){
+                               ContestServlet contestServlet, StudentServlet studentServlet,
+                               StudentClassServlet studentClassServlet){
         this.questionServlet = questionServlet;
         this.ojUserServlet = ojUserServlet;
         this.contestServlet = contestServlet;
+        this.studentServlet = studentServlet;
+        this.studentClassServlet = studentClassServlet;
     }
 
     @ResponseBody
@@ -142,5 +148,31 @@ public class AdminRestController {
         }
 
         return modelMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/studentInf")
+    public Map<String, Object> studentInf(@RequestParam(value = "userMail") String userMail){
+        Map<String, Object> ModelMap = new HashMap<>();
+
+        ModelMap.put("success", true);
+        Student student = studentServlet.selectStudentByMail(userMail);
+        ModelMap.put("studentMail", student.getStudentMail());
+        ModelMap.put("studentName", student.getStudentName());
+        ModelMap.put("studentClass", studentClassServlet.selectStudentClassByID(student.getStudentClassID()).getClassName());
+        ModelMap.put("studentID", student.getStudentID());
+
+        return ModelMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/acContestUser")
+    public Map<String, Object> acContestUser(@RequestParam(value = "userMail") String userMail,
+                                             @RequestParam(value = "contestID") String contestID){
+        Map<String, Object> ModelMap = new HashMap<>();
+
+        ModelMap.put("success", contestServlet.updateContestUser(contestID, userMail, 1));
+
+        return ModelMap;
     }
 }

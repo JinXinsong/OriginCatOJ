@@ -25,7 +25,7 @@ public interface JudgeDao {
     @Select("select * from JudgeResult where submitID = #{submitID}")
     JudgeResult selectJudgeBySubmitID(String submitID);
 
-    @Insert("insert into JudgeResult (userMail, submitID, questionNum, status, timeUsed, memoryUsed, errorMessage, time) values (#{userMail}, #{submitID}, #{questionNum}, #{status}, #{timeUsed}, #{memoryUsed}, #{errorMessage}, #{time})")
+    @Insert("insert into JudgeResult (userMail, submitID, questionNum, status, timeUsed, memoryUsed, errorMessage, time, questionTitle) values (#{userMail}, #{submitID}, #{questionNum}, #{status}, #{timeUsed}, #{memoryUsed}, #{errorMessage}, #{time}, #{questionTitle})")
     int insertJudge(JudgeResult judgeResult);
 
     @Update("update JudgeResult set status = #{status}, timeUsed = #{timeUsed}, memoryUsed = #{memoryUsed}, errorMessage = #{errorMessage} where submitID = #{submitID}")

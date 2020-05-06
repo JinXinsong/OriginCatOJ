@@ -15,6 +15,8 @@ public class JudgeResult {
 
     private int questionNum;
 
+    private String questionTitle;
+
     private int status;
 
     private int timeUsed;

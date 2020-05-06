@@ -2,6 +2,7 @@ package com.origincat.oj.controller;
 
 import com.origincat.oj.pojo.OJUser;
 import com.origincat.oj.pojo.Student;
+import com.origincat.oj.servlet.QuestionServlet;
 import com.origincat.oj.servlet.SelectOJUserServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,13 @@ import java.util.Map;
 @RestController
 public class CheckRestController {
     private SelectOJUserServlet selectOJUserServlet;
+    private QuestionServlet questionServlet;
 
     @Autowired
-    public CheckRestController(SelectOJUserServlet selectOJUserServlet) {
+    public CheckRestController(SelectOJUserServlet selectOJUserServlet,
+                               QuestionServlet questionServlet) {
         this.selectOJUserServlet = selectOJUserServlet;
+        this.questionServlet = questionServlet;
     }
 
     @ResponseBody
@@ -51,6 +55,21 @@ public class CheckRestController {
         } else {
             modelMap.put("success", true);
             modelMap.put("msg", "未被注册");
+        }
+
+        return modelMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/QuestionCheck", method = RequestMethod.POST)
+    public Map<String, Object> QuestionCheck(@RequestBody Map<String, Object> params) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        int questionNum = Integer.parseInt(params.get("questionNum").toString());
+
+        if (questionServlet.selectQuestionByNum(questionNum) != null) {
+            modelMap.put("success", true);
+        } else {
+            modelMap.put("success", false);
         }
 
         return modelMap;

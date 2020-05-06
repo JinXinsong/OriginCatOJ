@@ -4,13 +4,7 @@ import lombok.Data;
 
 @Data
 public class ContestSubmit {
-    int contestQuestionID;
+    private String contestID;
 
-    String userMail;
-
-    int inputNum;
-
-    int acceptNum;
-
-    int waNum;
+    private String submitID;
 }

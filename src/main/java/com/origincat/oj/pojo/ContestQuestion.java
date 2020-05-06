@@ -13,4 +13,6 @@ public class ContestQuestion {
     int inputNum;
 
     int AcceptNum;
+
+    int contestQuestionNum;
 }

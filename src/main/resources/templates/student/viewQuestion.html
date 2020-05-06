@@ -163,16 +163,18 @@
             $.ajax({
                 type: "POST",
                 url: "/judge",
+                sync: false,
                 data: JSON.stringify(dataValue),
                 contentType: "application/json",
                 dataType: "json",
                 success: function (result) {
                     result = JSON.parse(JSON.stringify(result));
                     if (result.success) {
-                        alert([[${question.questionID}]]);
+                        alert("提交成功");
                     }
                 }
             })
+            window.location.href = "/student/submit";
         });
     })
 </script>
