@@ -2,6 +2,7 @@ package com.origincat.oj.servlet;
 
 import com.origincat.oj.pojo.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface ContestServlet {
@@ -19,4 +20,6 @@ public interface ContestServlet {
     List<ContestUser> selectContestUser(String ContestID);
 
     boolean updateContestUser(String contestID, String userMail, int status);
+
+    List<List<String>> rank(String contestID) throws ParseException;
 }

@@ -30,13 +30,14 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">比赛</a>
+
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">所有比赛</a>
-                    <a class="dropdown-item" href="#">我的比赛</a>
+                    <a class="dropdown-item" href="/student/contest">所有比赛</a>
+                    <a class="dropdown-item" th:href="@{/student/contest(join=1)}">我的比赛</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">未开始</a>
-                    <a class="dropdown-item" href="#">已开始</a>
-                    <a class="dropdown-item" href="#">已结束</a>
+                    <a class="dropdown-item" th:href="@{/student/contest(status=1)}">未开始</a>
+                    <a class="dropdown-item" th:href="@{/student/contest(status=2)}">已开始</a>
+                    <a class="dropdown-item" th:href="@{/student/contest(status=3)}">已结束</a>
                 </div>
             </li>
             <li class="nav-item">

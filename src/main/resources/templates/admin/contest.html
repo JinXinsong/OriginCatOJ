@@ -85,7 +85,7 @@
             <tr th:each="c:${page.list}">
                 <td th:text="${c.contestNum}"></td>
                 <td th:text="${c.contestName}">Mark</td>
-                <td th:text="${c.startTime} == 1 ? '已发布' : '未发布'"></td>
+                <td th:text="${c.startTime} == 1 ? '已开始' : '未开始'"></td>
                 <td>
                     <a class="btn btn-secondary" th:href="@{/admin/viewContest(contestID=${c.contestID})}">查看</a>
                     <a class="btn btn-secondary" th:href="@{/admin/editContest(contestID=${c.contestID})}">修改</a>

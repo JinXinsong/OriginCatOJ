@@ -145,10 +145,6 @@
                                         <p th:text="${question.questionMemoryLimit}+'K'"></p>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>其他信息</label>
-                                    <p th:text="${question.questionPrompt}">NULL</p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -158,7 +154,20 @@
 
         <div id="collapse-contest2" class="collapse collapse-contest">
             <div class="card-body">
-                2
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="width: 15%">名称</th>
+                        <th scope="col" style="width: 10%">耗时</th>
+                        <th scope="col">1</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ranklist:${rank}">
+                        <td th:each="rankinf:${ranklist}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 

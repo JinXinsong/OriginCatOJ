@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -165,11 +166,12 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/viewContest")
-    public String viewContest(Model model, @RequestParam(value = "contestID") String contestID){
+    public String viewContest(Model model, @RequestParam(value = "contestID") String contestID) throws ParseException {
         model.addAttribute("contest", contestServlet.selectContestByID(contestID));
         model.addAttribute("questionList", contestServlet.selectQuestionListByID(contestID));
         model.addAttribute("JudgeResult", contestServlet.selectJudgeResultByContest(contestID));
         model.addAttribute("contestUser", contestServlet.selectContestUser(contestID));
+        model.addAttribute("rank", contestServlet.rank(contestID));
 
         return "admin/viewContest";
     }

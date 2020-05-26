@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../css/table.css}">
+    <style>
+        label{
+            color: steelblue;
+        }
+        .collapse-contest{
+            border: solid;
+            background-color: #ffffff;
+            border-top-color: #ffffff;
+            border-right-color: #dee2e6;
+            border-left-color: #dee2e6;
+            border-bottom-color: #dee2e6;
+            border-width: 1px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../static/css/table.css">
+</head>
+<body th:each="aa:${contestUser}">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">OCOJ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">题目</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/student/index">所有题目</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/student/index(status=2)}">已通过</a>
+                    <a class="dropdown-item" th:href="@{/student/index(status=1)}">未通过</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">比赛</a>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/student/contest">所有比赛</a>
+                    <a class="dropdown-item" th:href="@{/studnet/contest(join=1)}">我的比赛</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/studnet/contest(status=1)}">未开始</a>
+                    <a class="dropdown-item" th:href="@{/studnet/contest(status=2)}">已开始</a>
+                    <a class="dropdown-item" th:href="@{/studnet/contest(status=3)}">已结束</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/submit">提交</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/user">用户</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/student/about">关于</a>
+            </li>
+        </ul>
+    </div>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+
+<div style="height: 32px"></div>
+
+<div class="row">
+    <div class="col-2 list-group">
+        <a href="/student/contest" class="list-group-item list-group-item-action">所有比赛</a>
+        <a th:href="@{/studnet/contest(join=1)}" class="list-group-item list-group-item-action">新建比赛</a>
+        <a th:href="@{/studnet/contest(status=2)}" class="list-group-item list-group-item-action">已开始</a>
+        <a th:href="@{/studnet/contest(status=1)}" class="list-group-item list-group-item-action">未开始</a>
+        <a th:href="@{/studnet/contest(status=3)}" class="list-group-item list-group-item-action">已结束</a>
+    </div>
+    <div class="accordion col-9" style="background-color: #f8f9fa; padding-left: 0; padding-right: 0; height: 50px">
+        <ul class="nav nav-tabs">
+            <li class="nav-item nav-contest" id="nav-contest0">
+                <a class="nav-link active" href="#">比赛信息</a>
+            </li>
+            <li class="nav-item nav-contest" id="nav-contest1">
+                <a class="nav-link" href="#">题目列表</a>
+            </li>
+            <li class="nav-item nav-contest" id="nav-contest2">
+                <a class="nav-link" href="#">Rank榜单</a>
+            </li>
+            <li class="nav-item nav-contest" id="nav-contest3">
+                <a class="nav-link" href="#">提交列表</a>
+            </li>
+        </ul>
+        <div id="collapse-contest0" class="collapse show collapse-contest">
+            <div class="card-body">
+                <input type="hidden" th:value="${contest.getContestID()}" id="contestID">
+                <div class="form-group">
+                    <label>比赛名称</label>
+                    <p th:text="${contest.getContestName()}"></p>
+                </div>
+                <div class="form-group">
+                    <label>起止时间</label>
+                    <p th:text="${contest.getStartTime()} + ' - ' + ${contest.getEndTime()}" id="time"></p>
+                </div>
+                <div class="form-group">
+                    <label>比赛说明</label>
+                    <p th:text="${contest.getContestInf()}"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="collapse-contest1" class="collapse collapse-contest">
+            <div class="card-body">
+                <div class="accordion" id="accordionExample" th:each="question:${questionList}">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h6 class="mb-0" th:text="${question.getQuestionTitle()}"></h6>
+                        </div>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>题目</label>
+                                    <p th:text="${question.questionContent}"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>输入样例</label>
+                                    <p th:text="${question.questionInputSimple}"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>输出样例</label>
+                                    <p th:text="${question.questionOutputSimple}"></p>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col">
+                                        <label>时间限制</label>
+                                        <p th:text="${question.questionTimeLimit}+'MS'"></p>
+                                    </div>
+                                    <div class="col">
+                                        <label>内存限制</label>
+                                        <p th:text="${question.questionMemoryLimit}+'K'"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>其他信息</label>
+                                    <p th:text="${question.questionPrompt}">NULL</p>
+                                </div>
+                                <div class="form-group">
+                                    <label>其他信息</label>
+                                    <p th:text="${question.questionPrompt}">NULL</p>
+                                </div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea0">提交代码</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea0" rows="15"></textarea>
+                                    </div>
+                                </form>
+                                <div class="row form-group">
+                                    <div class="col">
+                                        <div type="button" class="btn btn-secondary col" id="submit">提交</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="collapse-contest2" class="collapse collapse-contest">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="width: 15%">名称</th>
+                        <th scope="col" style="width: 10%">耗时</th>
+                        <th scope="col">1</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ranklist:${rank}">
+                        <td th:each="rankinf:${ranklist}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="collapse-contest3" class="collapse collapse-contest">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="width: 20%">题目</th>
+                        <th scope="col" style="width: 20%">提交人</th>
+                        <th scope="col" style="width: 40%"></th>
+                        <th scope="col" style="width: 20%">结果</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="c:${JudgeResult}">
+                        <td th:text="${c.getQuestionTitle()}"></td>
+                        <td th:text="${c.getUserMail()}"></td>
+                        <td></td>
+                        <td>
+                            <a class="btn btn-secondary td-status" th:href="@{/student/viewSubmit(submitID=${c.submitID})}" th:text="${c.status}">查看</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" th:id="'contestUser' + ${aa.getContestUserID()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle" th:text="${aa.getUserName()}"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item0"><p class="mb-0">邮箱</p></li>
+                        <li class="list-group-item1"><p class="mb-0">姓名</p></li>
+                        <li class="list-group-item2"><p class="mb-0">班级</p></li>
+                        <li class="list-group-item3"><p class="mb-0">学号</p></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <input type="hidden" th:value="${aa.getUserMail()}" class="userMail">
+                    <button type="button" class="btn btn-primary acContestUser" th:data-target="'#contestUserStatus' + ${aa.getContestUserID()}">通过</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" th:src="@{../js/jquery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{../js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
+    <script type="text/javascript">
+        function getCookie(cname)
+        {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for(let i=0; i<ca.length; i++)
+            {
+                let c = ca[i].trim();
+                if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
+
+        $(function () {
+            $(".nav-contest").click(function () {
+                $(".nav-contest").children('.nav-link').removeClass("active");
+                $(this).children('.nav-link').addClass("active");
+                let id = $(this).attr('id').substr(11, 1);
+                $(".collapse").removeClass("show");
+                $("#collapse-contest" + id).addClass("show");
+            })
+            $(".card-header").click(function () {
+                $(this).parent().children('.collapse').toggle()
+            });
+            $(".checkUser").click(function () {
+                let checkID = $(this).attr("data-target")
+                let studentMail = "邮箱："
+                let studentName = "姓名："
+                let studentClass = "班级："
+                let studentID = "学号："
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "/admin/studentInf",
+                    data: "userMail="+$(this).parent().children(".userMail").val(),
+                    success: function (result) {
+                        result = JSON.parse(JSON.stringify(result));
+                        if(result.success){
+                            studentMail = studentMail + result.studentMail
+                            studentName = studentName + result.studentName
+                            studentClass = studentClass + result.studentClass
+                            studentID = studentID + result.studentID
+                            $(checkID).children(".modal-dialog").children(".modal-content").children(".modal-body").children(".list-group").children(".list-group-item0").children(".mb-0").html(studentMail);
+                            $(checkID).children(".modal-dialog").children(".modal-content").children(".modal-body").children(".list-group").children(".list-group-item1").children(".mb-0").html(studentName);
+                            $(checkID).children(".modal-dialog").children(".modal-content").children(".modal-body").children(".list-group").children(".list-group-item2").children(".mb-0").html(studentClass);
+                            $(checkID).children(".modal-dialog").children(".modal-content").children(".modal-body").children(".list-group").children(".list-group-item3").children(".mb-0").html(studentID);
+                        }
+                    }
+                })
+                $(checkID).addClass("show");
+            })
+
+            $(".acContestUser").click(function () {
+                let checkID = $(this).attr("data-target")
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "/admin/acContestUser",
+                    data: "userMail="+$(this).parent().children(".userMail").val()+"&&contestID="+$("#contestID").val(),
+                    success: function (result) {
+                        result = JSON.parse(JSON.stringify(result));
+                        if(result.success){
+                            alert("成功")
+                            $(checkID).html("已通过");
+                            $(this).parent().parent().parent().parent().removeClass("show");
+                        }
+                    }
+                })
+            })
+
+            $("#submit").click(function () {
+                let $node = '<tr>'
+                    + '<td>1</td>'
+                    + '<td>alfa jin</td>'
+                    + '<td><a class="btn btn-success">Accept</a></td>'
+                    + '<td>'
+                    + '<a class="btn btn-secondary td-status">查看</a>'
+                    + '</td>'
+                    + '</tr>'
+                $("#submitTable").before($node);
+                alert("提交成功")
+            });
+        });
+
+        window.onload = function(){
+            let startTime = "" + [[${contest.getStartTime()}]];
+            let endTime = "" + [[${contest.getEndTime()}]];
+            startTime = startTime.substr(0, 4) + '-' + startTime.substr(4, 2) + '-' + startTime.substr(6,2) + "&nbsp;" + startTime.substr(8,2) + ":" + startTime.substr(10,2);
+            endTime = endTime.substr(0, 4) + '-' + endTime.substr(4, 2) + '-' + endTime.substr(6,2) + "&nbsp;" + endTime.substr(8,2) + ":" + endTime.substr(10,2);
+            document.getElementById("time").innerHTML = startTime + '&nbsp;至&nbsp;' + endTime;
+        }
+    </script>
+</body>
+</html>
