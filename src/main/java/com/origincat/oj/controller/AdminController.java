@@ -104,7 +104,7 @@ public class AdminController {
 
     @RequestMapping(value = "/submit")
     public String submit(Model model, @RequestParam(value = "start", defaultValue = "1") int start,
-                         @RequestParam(value = "size", defaultValue = "10") int size,
+                         @RequestParam(value = "size", defaultValue = "10") int size, 
                          @RequestParam(value = "status", defaultValue = "0") int status){
         PageHelper.startPage(start,size,"submitID desc");
         List<JudgeResult> judgeResultList = null;
